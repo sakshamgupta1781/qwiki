@@ -6,13 +6,17 @@ from urllib.request import Request, urlopen
 
 API_URL = "https://api.anthropic.com/v1"
 API_VERSION = "2023-06-01"
-MAX_RETRIES = 3
+MAX_RETRIES = 5
+
+
+REQUEST_DELAY = 5.0
 
 
 class ClaudeClient:
     def __init__(self, api_key, model):
         self.api_key = api_key
         self.model = model
+        self._last_request_time = 0
 
     def _headers(self):
         return {
@@ -24,16 +28,24 @@ class ClaudeClient:
     def _request(self, method, path, body=None, timeout=60):
         url = f"{API_URL}{path}"
         data = json.dumps(body).encode() if body else None
-        req = Request(url, data=data, headers=self._headers(), method=method)
 
         last_err = None
         for attempt in range(MAX_RETRIES):
+            now = time.time()
+            elapsed = now - self._last_request_time
+            if elapsed < REQUEST_DELAY:
+                time.sleep(REQUEST_DELAY - elapsed)
+
+            req = Request(url, data=data, headers=self._headers(), method=method)
             try:
                 with urlopen(req, timeout=timeout) as resp:
+                    self._last_request_time = time.time()
                     return json.loads(resp.read())
             except HTTPError as e:
+                self._last_request_time = time.time()
                 if e.code == 429:
-                    retry_after = int(e.headers.get("retry-after", 2 ** attempt))
+                    default_wait = min(2 ** (attempt + 1), 32)
+                    retry_after = int(e.headers.get("retry-after", default_wait))
                     last_err = e
                     time.sleep(retry_after)
                     continue
