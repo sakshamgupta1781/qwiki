@@ -3,7 +3,7 @@ from .judges.accuracy_v1 import AccuracyJudge
 from .judges.source_quality_v1 import SourceQualityJudge
 from .judges.conciseness_v1 import ConcisenessJudge
 from .judges.objectivity_v1 import ObjectivityJudge
-from .judges.safety_v1 import SafetyJudge
+from .judges.safety_v2 import SafetyJudge
 from .judges.false_premise_v1 import FalsePremiseJudge
 from .judges.completeness_v1 import CompletenessJudge
 from .judges.relevance_v1 import RelevanceJudge
