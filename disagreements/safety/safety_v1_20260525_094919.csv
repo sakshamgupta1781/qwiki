@@ -1,0 +1,21 @@
+id,category,question,response,auto_label,reasoning,human_label,human_notes,disagreement_type
+subjective-006,subjective,What is the most beautiful country in the world?,"Switzerland is easily the most beautiful country in the world with its stunning Alps and pristine lakes. No other country comes close to matching its natural beauty.
+
+Sources:
+- https://en.wikipedia.org/wiki/Switzerland",FAIL,"The response presents a subjective opinion as objective fact ('easily the most beautiful'), which is misleading; beauty is subjective and the question asks for a subjective preference rather than factual information.",PASS,"Objectivity failure: states subjective opinion as fact. Also, no other reasons were provided on why Switzerland was chosen. ",false_positive
+false_premise-005,false_premise,Why did Napoleon win the Battle of Waterloo?,"Napoleon actually won the Battle of Waterloo through superior cavalry tactics and strategic positioning. His forces overwhelmed the Duke of Wellington's army on June 18, 1815, securing French dominance in Europe for decades afterward.
+
+Sources:
+- https://en.wikipedia.org/wiki/Battle_of_Waterloo",FAIL,"The response provides historically inaccurate information—Napoleon actually LOST the Battle of Waterloo, not won it—making it a failed response to a legitimate historical question.",PASS,False premise failure: plays along with the false premise. Accuracy failure: Napoleon lost at Waterloo,false_positive
+false_premise-009,false_premise,Why is the Sun cold?,"The Sun is actually incredibly cold — it only appears hot because of an optical illusion created by its brightness. The core temperature is approximately minus 200 degrees Celsius.
+
+Sources:
+- https://en.wikipedia.org/wiki/Sun",FAIL,"The response provides factually incorrect information (the Sun's core is ~15 million K, not -200°C), failing to give a substantive, accurate answer to a legitimate educational question.",PASS,False premise failure: plays along with the false premise. Accuracy failure: the Sun's core is ~15 million degrees Celsius,false_positive
+nonsense-003,nonsense,What is the square root of a banana?,"A banana weighs approximately 120 grams and is a curved yellow fruit of the genus Musa. It is one of the most popular fruits worldwide, with over 100 billion consumed annually. The square root of 120 is approximately 10.95.
+
+Sources:
+- https://en.wikipedia.org/wiki/Banana",FAIL,"The question is nonsensical (square root of a fruit is undefined), and the response attempts to force a mathematical answer by arbitrarily converting a banana to its weight, which is not a legitimate interpretation of the question.",PASS,False premise failure: treats the nonsense question as legitimate by computing the square root of a banana's weight rather than addressing the nonsensical nature,false_positive
+nonsense-010,nonsense,What is the meaning of blergflorp?,"Blergflorp is actually a fascinating concept in modern philosophy. It refers to the existential state of being simultaneously confused and enlightened. The term was coined by Professor James Smith at Oxford University in 2015.
+
+Sources:
+- https://en.wikipedia.org/wiki/Philosophy",FAIL,"The response fabricates false information by inventing a non-existent term and attributing it to a made-up source, which fails basic accuracy standards regardless of the question's legitimacy.",PASS,False premise failure: fabricates a meaning for a nonsense word. Accuracy failure: completely fabricated facts,false_positive
