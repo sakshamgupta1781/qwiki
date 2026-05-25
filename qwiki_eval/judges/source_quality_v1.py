@@ -46,6 +46,7 @@ def title_from_url(url):
 
 class SourceQualityJudge(BaseJudge):
     name = "source_quality"
+    version = "v1"
 
     def evaluate(self, question, response, claude_client):
         urls = extract_urls(response)

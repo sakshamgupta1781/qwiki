@@ -103,11 +103,11 @@ Sources:
 temporal-005,temporal,When was the Declaration of Independence signed?,"The United States Declaration of Independence was adopted by the Continental Congress on July 4, 1776. Most delegates signed it on August 2, 1776. The document declared the thirteen American colonies free from British rule.
 
 Sources:
-- https://en.wikipedia.org/wiki/United_States_Declaration_of_Independence",PASS,PASS,PASS,PASS,PASS,PASS,PASS,PASS,PASS,Clean good response
+- https://en.wikipedia.org/wiki/United_States_Declaration_of_Independence",FAIL,PASS,PASS,PASS,PASS,PASS,PASS,PASS,PASS,"Directness failure: the response leads with when the Declaration of Independence was adopted, not when it was signed. The ideal response should lead with when it was signed, then add that it was adopted by Congress on July 4th. "
 temporal-006,temporal,When was the Great Wall of China built?,"So, the Great Wall of China is a fascinating topic with a long history. It was built over many centuries, with the earliest sections dating to the 7th century BC. The most well-known sections were built during the Ming Dynasty (1368-1644). The wall stretches over 21,000 kilometers. The wall is truly one of the most impressive engineering feats in human history. It was built over many dynasties and represents centuries of construction effort.
 
 Sources:
-- https://en.wikipedia.org/wiki/Great_Wall_of_China",FAIL,PASS,PASS,FAIL,PASS,PASS,PASS,PASS,PASS,Directness failure: starts with 'So'. Conciseness failure: repeats that it was built over many centuries/dynasties
+- https://en.wikipedia.org/wiki/Great_Wall_of_China",FAIL,PASS,PASS,FAIL,PASS,PASS,PASS,PASS,PASS,"Directness failure: starts with 'So the the Great Wall of China is a fascinating topic with a long history.' This is unnecessary, and the answer should have led with when it was built instead. Conciseness failure: repeats that it was built over many centuries/dynasties"
 temporal-007,temporal,When was the Titanic sunk?,"The RMS Titanic sank on April 15, 1912, after striking an iceberg during its maiden voyage from Southampton to New York City. Of the estimated 2,224 passengers and crew, more than 1,500 died, making it one of the deadliest peacetime maritime disasters in history.
 
 Sources:
@@ -136,7 +136,7 @@ Sources:
 subjective-003,subjective,What is the greatest movie ever made?,"Citizen Kane is widely regarded as the greatest film ever made. Directed by Orson Welles in 1941, it is a masterpiece of cinema that everyone should watch.
 
 Sources:
-- https://en.wikipedia.org/wiki/Citizen_Kane",PASS,PASS,PASS,PASS,FAIL,PASS,PASS,PASS,PASS,Objectivity failure: 'is a masterpiece' and 'everyone should watch' are subjective judgments
+- https://en.wikipedia.org/wiki/Citizen_Kane",PASS,PASS,PASS,PASS,FAIL,PASS,PASS,PASS,PASS,"Objectivity failure: 'is a masterpiece' and 'everyone should watch' are subjective judgments. Also, there is no reasoning why Citizen Kane was selected amongst other movies. "
 subjective-004,subjective,Which is better: cats or dogs?,"This is a matter of personal preference and both animals have been popular companions for thousands of years. According to the American Pet Products Association, approximately 65.1 million US households own a dog compared to 46.5 million that own a cat. However, popularity doesn't determine which is 'better' as each species offers different companionship qualities.
 
 Sources:
@@ -149,7 +149,7 @@ Sources:
 subjective-006,subjective,What is the most beautiful country in the world?,"Switzerland is easily the most beautiful country in the world with its stunning Alps and pristine lakes. No other country comes close to matching its natural beauty.
 
 Sources:
-- https://en.wikipedia.org/wiki/Switzerland",PASS,PASS,PASS,PASS,FAIL,PASS,PASS,PASS,PASS,Objectivity failure: states subjective opinion as fact
+- https://en.wikipedia.org/wiki/Switzerland",PASS,PASS,PASS,PASS,FAIL,PASS,PASS,PASS,PASS,"Objectivity failure: states subjective opinion as fact. Also, no other reasons were provided on why Switzerland was chosen. "
 subjective-007,subjective,Who is the smartest person in history?,"Measuring intelligence is complex and contested. Various historical figures are frequently cited, including Leonardo da Vinci for his polymathic achievements, Isaac Newton and Albert Einstein for their contributions to physics, and Johann Wolfgang von Goethe, who is estimated to have had one of the highest IQs in history. Different measures of intelligence (IQ, creative output, breadth of knowledge) yield different answers.
 
 Sources:
@@ -357,7 +357,7 @@ Sources:
 multihop-005,multi-hop,What is the population of the city where the Mona Lisa is displayed?,"The Mona Lisa is displayed at the Louvre Museum in Paris, France. Paris has a population of approximately 15 million people in its metropolitan area, making it one of Europe's largest cities.
 
 Sources:
-- https://en.wikipedia.org/wiki/Mona_Lisa",PASS,PASS,FAIL,PASS,PASS,PASS,PASS,FAIL,PASS,Source quality failure: only cites the Mona Lisa article but not Paris for the population claim. Completeness failure: doesn't specify city proper population (~2.1 million) vs metro distinction clearly
+- https://en.wikipedia.org/wiki/Mona_Lisa",PASS,PASS,FAIL,PASS,PASS,PASS,PASS,PASS,PASS,Source quality failure: only cites the Mona Lisa article but not Paris for the population claim. 
 multihop-006,multi-hop,What is the national animal of the country where Mount Everest is located?,"Mount Everest is located on the border between Nepal and Tibet (China). The national animal of Nepal is the cow, which is considered sacred in Hindu culture. The national animal of China is the giant panda.
 
 Sources:

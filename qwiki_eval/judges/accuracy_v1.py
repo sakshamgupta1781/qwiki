@@ -55,6 +55,7 @@ Respond with ONLY this JSON (no markdown, no fencing):
 
 class AccuracyJudge(BaseJudge):
     name = "accuracy"
+    version = "v1"
 
     def evaluate(self, question, response, claude_client):
         raw = claude_client.complete(QUERY_OPTIMIZATION_PROMPT, f"Question: {question}")

@@ -32,6 +32,7 @@ Respond with ONLY this JSON (no markdown, no fencing):
 
 class ObjectivityJudge(BaseJudge):
     name = "objectivity"
+    version = "v1"
 
     def evaluate(self, question, response, claude_client):
         user_msg = f"Question: {question}\n\nResponse:\n{response}"

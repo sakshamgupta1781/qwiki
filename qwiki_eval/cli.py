@@ -2,6 +2,7 @@ import argparse
 import csv
 import os
 import sys
+from datetime import datetime
 
 from .api.claude import ClaudeClient
 from .runner import run_eval, ALL_JUDGES
@@ -74,6 +75,27 @@ def cmd_eval(args):
         print(format_table(results, composite))
 
 
+RESULTS_FIELDS = ["id", "category", "question", "auto_label", "reasoning",
+                   "human_label", "match"]
+DISAGREEMENTS_FIELDS = ["id", "category", "question", "response", "auto_label",
+                        "reasoning", "human_label", "human_notes",
+                        "disagreement_type"]
+HISTORY_FIELDS = ["timestamp", "judge", "version", "precision", "recall",
+                  "f1", "tp", "fp", "fn", "tn", "n", "model"]
+
+CASE_COOLDOWN = 60
+
+
+def _append_csv(path, fieldnames, row):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    write_header = not os.path.exists(path)
+    with open(path, "a", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        if write_header:
+            writer.writeheader()
+        writer.writerow(row)
+
+
 def cmd_calibrate(args):
     api_key = get_api_key()
     model = args.model or pick_model_interactive(api_key)
@@ -91,18 +113,39 @@ def cmd_calibrate(args):
         print("Error: golden eval set is empty.", file=sys.stderr)
         sys.exit(1)
 
-    judge_names = [j.name for j in ALL_JUDGES]
-    if judge_filter:
-        judge_names = [n for n in judge_names if n in judge_filter]
+    judges = [j for j in ALL_JUDGES if not judge_filter or j.name in judge_filter]
+    judge_names = [j.name for j in judges]
+    judge_versions = {j.name: getattr(j, "version", "unknown") for j in judges}
+
+    now = datetime.now()
+    timestamp_file = now.strftime("%Y%m%d_%H%M%S")
+
+    results_paths = {}
+    disagreements_paths = {}
+    for name in judge_names:
+        v = judge_versions[name]
+        results_paths[name] = f"results/{name}/{name}_{v}_{timestamp_file}.csv"
+        disagreements_paths[name] = f"disagreements/{name}/{name}_{v}_{timestamp_file}.csv"
+
+    for name in judge_names:
+        os.makedirs(os.path.dirname(results_paths[name]), exist_ok=True)
+        with open(results_paths[name], "w", newline="", encoding="utf-8") as f:
+            csv.DictWriter(f, fieldnames=RESULTS_FIELDS).writeheader()
+        os.makedirs(os.path.dirname(disagreements_paths[name]), exist_ok=True)
+        with open(disagreements_paths[name], "w", newline="", encoding="utf-8") as f:
+            csv.DictWriter(f, fieldnames=DISAGREEMENTS_FIELDS).writeheader()
 
     per_judge_auto = {name: [] for name in judge_names}
     per_judge_human = {name: [] for name in judge_names}
 
     total = len(cases)
+    import time
     for i, case in enumerate(cases, 1):
         question = case.get("question", "")
         response = case.get("response", "")
+        category = case.get("category", "")
         case_id = case.get("id", f"case-{i}")
+        notes = case.get("notes", "")
 
         print(f"[{i}/{total}] Evaluating {case_id}...", file=sys.stderr)
         results, _ = run_eval(question, response, client, judge_names=set(judge_names))
@@ -116,10 +159,44 @@ def cmd_calibrate(args):
                 continue
 
             human_pass = human_label == "PASS"
+            r = result_by_name.get(name)
+            if not r:
+                continue
 
-            if name in result_by_name:
-                per_judge_auto[name].append(result_by_name[name].passed)
-                per_judge_human[name].append(human_pass)
+            auto_label = "PASS" if r.passed else "FAIL"
+            match = auto_label == human_label
+
+            per_judge_auto[name].append(r.passed)
+            per_judge_human[name].append(human_pass)
+
+            _append_csv(results_paths[name], RESULTS_FIELDS, {
+                "id": case_id,
+                "category": category,
+                "question": question,
+                "auto_label": auto_label,
+                "reasoning": r.reasoning,
+                "human_label": human_label,
+                "match": str(match).upper(),
+            })
+
+            if not match:
+                dtype = "false_positive" if auto_label == "FAIL" else "false_negative"
+                _append_csv(disagreements_paths[name], DISAGREEMENTS_FIELDS, {
+                    "id": case_id,
+                    "category": category,
+                    "question": question,
+                    "response": response,
+                    "auto_label": auto_label,
+                    "reasoning": r.reasoning,
+                    "human_label": human_label,
+                    "human_notes": notes,
+                    "disagreement_type": dtype,
+                })
+
+        if i < total:
+            time.sleep(CASE_COOLDOWN)
+
+    timestamp_iso = datetime.now().isoformat(timespec="seconds")
 
     print(f"\nqwiki-eval calibrate — Judge Calibration Report")
     print(f"Model: {model}")
@@ -129,6 +206,7 @@ def cmd_calibrate(args):
     print("─" * 57)
 
     all_metrics = []
+    history_rows = []
     for name in judge_names:
         if not per_judge_auto[name]:
             print(f"{name:<19} {'N/A':>9} {'N/A':>9} {'N/A':>9} {'0':>5}")
@@ -141,6 +219,21 @@ def cmd_calibrate(args):
             f"{m['f1']:>9.2f} {m['n']:>5}"
         )
 
+        history_rows.append({
+            "timestamp": timestamp_iso,
+            "judge": name,
+            "version": judge_versions[name],
+            "precision": f"{m['precision']:.4f}",
+            "recall": f"{m['recall']:.4f}",
+            "f1": f"{m['f1']:.4f}",
+            "tp": m["tp"],
+            "fp": m["fp"],
+            "fn": m["fn"],
+            "tn": m["tn"],
+            "n": m["n"],
+            "model": model,
+        })
+
     if all_metrics:
         print("─" * 57)
         macro_p = sum(m["precision"] for m in all_metrics) / len(all_metrics)
@@ -151,6 +244,19 @@ def cmd_calibrate(args):
             f"{'OVERALL (macro)':<19} {macro_p:>9.2f} {macro_r:>9.2f} "
             f"{macro_f1:>9.2f} {total_n:>5}"
         )
+
+    if history_rows:
+        os.makedirs("calibration", exist_ok=True)
+        write_header = not os.path.exists("calibration/history.csv")
+        with open("calibration/history.csv", "a", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=HISTORY_FIELDS)
+            if write_header:
+                writer.writeheader()
+            writer.writerows(history_rows)
+
+    print(f"\nResults: results/<judge>/", file=sys.stderr)
+    print(f"Disagreements: disagreements/<judge>/", file=sys.stderr)
+    print(f"History: calibration/history.csv", file=sys.stderr)
 
 
 def main():
