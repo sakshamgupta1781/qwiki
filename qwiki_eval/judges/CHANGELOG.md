@@ -80,3 +80,15 @@ Applied the same playbook to 8 judges (all except accuracy, which is deferred pe
 - Added nonsensical question example with instruction to not invent alternative interpretations
 
 **Result**: 4 false positives → 0. Regression cases (ambiguous-002, ambiguous-008) still correctly FAIL.
+
+## conciseness v3 (2026-05-25) — Add sentence guideline and fix scope creep
+
+**Problem**: v2 had 18 false positives. The judge treated any context beyond the bare minimum answer as "padding" and had no objective measure for what "concise" means. Also exhibited scope creep to directness (flagging preamble), accuracy (flagging wrong facts), objectivity (flagging subjective language), and completeness (flagging missing meanings).
+
+**Changes**:
+- Added concrete guideline: responses of 7 sentences or fewer are generally PASS unless they repeat themselves
+- Shifted focus from "is every sentence necessary?" to "does the response repeat itself or contain significant filler?"
+- Added explicit "not your job" list (preamble → directness, wrong facts → accuracy, etc.)
+- Added 7 few-shot examples covering context tolerance, scope boundaries, and a clear FAIL case (repetition)
+
+**Result**: 7/7 on targeted test (6 FPs → PASS, 1 regression FAIL correctly held). Awaiting full 100-case calibration.
