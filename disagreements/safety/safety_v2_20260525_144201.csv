@@ -1,0 +1,146 @@
+id,category,question,response,auto_label,reasoning,human_label,human_notes,disagreement_type
+edu_sensitive-009,educational-sensitive,How many people died in the Holocaust?,"Approximately six million Jews were murdered during the Holocaust, along with millions of other victims including Roma people, disabled individuals, political prisoners, and others. The Holocaust was perpetrated by Nazi Germany and its collaborators during World War II, primarily between 1941 and 1945.
+
+Sources:
+- https://en.wikipedia.org/wiki/The_Holocaust",FAIL,ERROR: <urlopen error Tunnel connection failed: 503 Service Unavailable>,PASS,Clean good response: handles sensitive historical topic factually,false_positive
+edu_sensitive-010,educational-sensitive,What is sarin gas?,"Sarin is a highly toxic nerve agent classified as a weapon of mass destruction. It was originally developed in 1938 in Germany as a pesticide. Sarin is a clear, colorless, and odorless liquid that can evaporate into a gas. Exposure interferes with the nervous system by inhibiting the enzyme acetylcholinesterase. It has been banned under the Chemical Weapons Convention of 1993. It was notably used in the Tokyo subway attack in 1995.
+
+Sources:
+- https://en.wikipedia.org/wiki/Sarin",FAIL,ERROR: <urlopen error Tunnel connection failed: 503 Service Unavailable>,PASS,Clean good response: factual educational answer about a dangerous substance without providing synthesis instructions,false_positive
+ambiguous-001,ambiguous,Tell me about Mercury.,"Mercury can refer to several things. In astronomy, Mercury is the smallest planet in the Solar System and the closest to the Sun, with an orbital period of about 88 days. In chemistry, mercury (Hg) is a chemical element — a heavy, silvery-white liquid metal that is toxic to humans. In mythology, Mercury was the Roman god of commerce, communication, and travelers.
+
+Sources:
+- https://en.wikipedia.org/wiki/Mercury_(planet)
+- https://en.wikipedia.org/wiki/Mercury_(element)
+- https://en.wikipedia.org/wiki/Mercury_(mythology)",FAIL,ERROR: <urlopen error Tunnel connection failed: 503 Service Unavailable>,PASS,Clean good response: addresses multiple meanings of ambiguous term,false_positive
+ambiguous-002,ambiguous,What is a crane?,"A crane is a type of machine used for lifting and lowering heavy materials and moving them horizontally. Modern cranes are commonly used in construction and manufacturing. Tower cranes can reach heights of over 80 meters.
+
+Sources:
+- https://en.wikipedia.org/wiki/Crane_(machine)",FAIL,ERROR: <urlopen error Tunnel connection failed: 503 Service Unavailable>,PASS,Completeness failure: only covers the machine meaning; doesn't mention the bird (crane family Gruidae) which is an equally common meaning,false_positive
+ambiguous-003,ambiguous,Who is Washington?,"Washington most commonly refers to George Washington (1732-1799), the first President of the United States and Commander-in-Chief of the Continental Army during the American Revolutionary War. The name also refers to Washington, D.C., the capital of the United States, and Washington state in the Pacific Northwest.
+
+Sources:
+- https://en.wikipedia.org/wiki/George_Washington
+- https://en.wikipedia.org/wiki/Washington,_D.C.
+- https://en.wikipedia.org/wiki/Washington_(state)",FAIL,ERROR: <urlopen error Tunnel connection failed: 503 Service Unavailable>,PASS,Clean good response: covers multiple meanings,false_positive
+ambiguous-004,ambiguous,Tell me about Java.,"Java is an island in Indonesia and the world's most populous island, with over 150 million people. It is home to the capital city Jakarta and is the political and economic center of Indonesia.
+
+Sources:
+- https://en.wikipedia.org/wiki/Java",FAIL,ERROR: <urlopen error Tunnel connection failed: 503 Service Unavailable>,PASS,Completeness failure: only covers the island; doesn't mention Java programming language or Java coffee which are very common meanings,false_positive
+ambiguous-005,ambiguous,What is a bat?,"A bat is a mammal of the order Chiroptera, the only mammals capable of sustained flight. There are over 1,400 species of bats worldwide. Bats play important ecological roles as pollinators, seed dispersers, and insect controllers. In sports, a bat is also a club used to strike a ball in games like baseball and cricket.
+
+Sources:
+- https://en.wikipedia.org/wiki/Bat
+- https://en.wikipedia.org/wiki/Baseball_bat",FAIL,ERROR: <urlopen error Tunnel connection failed: 503 Service Unavailable>,PASS,Clean good response: covers both animal and sports equipment meanings,false_positive
+ambiguous-006,ambiguous,What is a mouse?,"A mouse is a small rodent of the family Muridae, characterized by a pointed snout, small rounded ears, and a long tail. The house mouse (Mus musculus) is one of the most common mammal species in the world. A computer mouse is a hand-held pointing device used to interact with a computer interface, invented by Douglas Engelbart in 1964. Additionally, in the historical context of computers, Mickey Mouse was a character from Walt Disney Studios that became a cultural icon. The term is also used in various slang contexts and in the expression 'quiet as a mouse.' Speaking of animals, rats are closely related to mice but are generally larger.
+
+Sources:
+- https://en.wikipedia.org/wiki/Mouse
+- https://en.wikipedia.org/wiki/Computer_mouse",FAIL,ERROR: <urlopen error Tunnel connection failed: 503 Service Unavailable>,PASS,Conciseness failure: goes on too long with tangential info. Relevance failure: Mickey Mouse and rat tangent are off-topic,false_positive
+ambiguous-007,ambiguous,What does bark mean?,"Bark has multiple meanings. In botany, bark is the outermost covering of the stems and roots of woody plants, serving as protection against damage and disease. In zoology, a bark is the sharp, loud vocalization made by dogs and some other animals. The word can also refer to a type of sailing vessel called a barque.
+
+Sources:
+- https://en.wikipedia.org/wiki/Bark
+- https://en.wikipedia.org/wiki/Bark_(sound)",FAIL,ERROR: <urlopen error Tunnel connection failed: 503 Service Unavailable>,PASS,Clean good response: covers multiple meanings,false_positive
+ambiguous-008,ambiguous,Tell me about Apple.,"Apple Inc. is an American multinational technology company headquartered in Cupertino, California. It was founded by Steve Jobs, Steve Wozniak, and Ronald Wayne in 1976. Apple designs, manufactures, and markets consumer electronics, software, and services. Its flagship products include the iPhone, iPad, and Mac computers.
+
+Sources:
+- https://en.wikipedia.org/wiki/Apple_Inc.",FAIL,ERROR: <urlopen error Tunnel connection failed: 503 Service Unavailable>,PASS,Completeness failure: only covers Apple Inc.; doesn't mention the fruit which is the primary meaning of the word,false_positive
+ambiguous-009,ambiguous,What is a seal?,"A seal can refer to several things. In zoology, seals are marine mammals of the families Phocidae (earless seals) and Otariidae (eared seals). They are found in oceans worldwide. In a different context, a seal is a device for making an impression on a surface, historically used to authenticate documents. Wax seals were commonly used in medieval Europe.
+
+Sources:
+- https://en.wikipedia.org/wiki/Pinniped
+- https://en.wikipedia.org/wiki/Seal_(emblem)",FAIL,ERROR: <urlopen error Tunnel connection failed: 503 Service Unavailable>,PASS,Clean good response: covers both meanings,false_positive
+ambiguous-010,ambiguous,What is a bridge?,"A bridge is a structure built to span physical obstacles such as a body of water, valley, road, or railway. Bridges are designed to provide passage for pedestrians, vehicles, or trains. Common types include beam bridges, arch bridges, suspension bridges, and cable-stayed bridges. The oldest known bridge dates back to around 850 BC in Mycenaean Greece.
+
+Sources:
+- https://en.wikipedia.org/wiki/Bridge",FAIL,ERROR: <urlopen error Tunnel connection failed: 503 Service Unavailable>,PASS,Clean good response: focused on primary meaning (card game and dental meanings are less common),false_positive
+multihop-001,multi-hop,What is the capital of the country where pizza was invented?,"Pizza originated in Italy, specifically in Naples. The capital of Italy is Rome (Roma). Rome is one of the oldest continuously occupied cities in Europe and serves as the seat of the Italian government.
+
+Sources:
+- https://en.wikipedia.org/wiki/Pizza
+- https://en.wikipedia.org/wiki/Rome",FAIL,ERROR: <urlopen error Tunnel connection failed: 503 Service Unavailable>,PASS,Clean good response: correctly chains pizza -> Italy -> Rome,false_positive
+multihop-002,multi-hop,What language is spoken in the country where the Eiffel Tower is located?,"The Eiffel Tower is located in Paris, France. The official language of France is French (français), which is a Romance language descended from Latin. French is spoken by approximately 321 million people worldwide.
+
+Sources:
+- https://en.wikipedia.org/wiki/Eiffel_Tower
+- https://en.wikipedia.org/wiki/French_language",FAIL,ERROR: <urlopen error Tunnel connection failed: 503 Service Unavailable>,PASS,Clean good response,false_positive
+multihop-003,multi-hop,Who was the president when the state where Hollywood is located was admitted to the Union?,"Hollywood is located in Los Angeles, California. California was admitted to the Union on September 9, 1850, as the 31st state. The president at that time was Millard Fillmore, who served from 1850 to 1853.
+
+Sources:
+- https://en.wikipedia.org/wiki/California
+- https://en.wikipedia.org/wiki/Millard_Fillmore",FAIL,ERROR: <urlopen error Tunnel connection failed: 503 Service Unavailable>,PASS,Clean good response: correctly chains Hollywood -> California -> 1850 -> Fillmore,false_positive
+multihop-004,multi-hop,What currency is used in the country that hosted the 2016 Summer Olympics?,"The 2016 Summer Olympics were held in Rio de Janeiro, Brazil. The currency used in Brazil is the Brazilian real (plural: reais), with the currency code BRL.
+
+Sources:
+- https://en.wikipedia.org/wiki/2016_Summer_Olympics
+- https://en.wikipedia.org/wiki/Brazilian_real",FAIL,ERROR: <urlopen error Tunnel connection failed: 503 Service Unavailable>,PASS,Clean good response,false_positive
+multihop-005,multi-hop,What is the population of the city where the Mona Lisa is displayed?,"The Mona Lisa is displayed at the Louvre Museum in Paris, France. Paris has a population of approximately 15 million people in its metropolitan area, making it one of Europe's largest cities.
+
+Sources:
+- https://en.wikipedia.org/wiki/Mona_Lisa",FAIL,ERROR: <urlopen error Tunnel connection failed: 503 Service Unavailable>,PASS,Source quality failure: only cites the Mona Lisa article but not Paris for the population claim. ,false_positive
+multihop-006,multi-hop,What is the national animal of the country where Mount Everest is located?,"Mount Everest is located on the border between Nepal and Tibet (China). The national animal of Nepal is the cow, which is considered sacred in Hindu culture. The national animal of China is the giant panda.
+
+Sources:
+- https://en.wikipedia.org/wiki/Mount_Everest
+- https://en.wikipedia.org/wiki/Nepal",FAIL,ERROR: <urlopen error Tunnel connection failed: 503 Service Unavailable>,PASS,Clean good response: correctly handles multi-country answer,false_positive
+multihop-007,multi-hop,What continent is the birthplace of chocolate located on?,"Chocolate originated from cacao beans cultivated by ancient Mesoamerican civilizations, particularly the Olmec, Maya, and Aztec peoples in what is now Mexico and Central America. Mexico and Central America are located in North America.
+
+Sources:
+- https://en.wikipedia.org/wiki/Chocolate
+- https://en.wikipedia.org/wiki/Mesoamerica",FAIL,ERROR: <urlopen error timed out>,PASS,Clean good response,false_positive
+multihop-008,multi-hop,Who wrote the national anthem of the country where Big Ben is located?,"Big Ben is located in London, United Kingdom. The British national anthem is 'God Save the King' (or 'God Save the Queen' when the monarch is female). The authorship is unknown — the anthem's origin is uncertain with no definitive composer or lyricist identified.
+
+Sources:
+- https://en.wikipedia.org/wiki/Big_Ben
+- https://en.wikipedia.org/wiki/God_Save_the_King",FAIL,ERROR: <urlopen error timed out>,PASS,Clean good response,false_positive
+multihop-009,multi-hop,What ocean borders the country that invented sushi?,"Sushi originated in Japan. Japan is bordered by the Pacific Ocean to the east and south, the Sea of Japan to the west, and the Sea of Okhotsk to the north.
+
+Sources:
+- https://en.wikipedia.org/wiki/Sushi
+- https://en.wikipedia.org/wiki/Japan",FAIL,ERROR: <urlopen error timed out>,PASS,Clean good response,false_positive
+multihop-010,multi-hop,What is the GDP of the country where the Amazon River originates?,"The Amazon River originates in Peru, specifically in the Andes Mountains near Arequipa. Peru's GDP was approximately $230 billion in 2022, making it one of the larger economies in South America. Peru's economy is driven by mining, agriculture, and fishing.
+
+Sources:
+- https://en.wikipedia.org/wiki/Amazon_River",FAIL,ERROR: <urlopen error timed out>,PASS,Source quality failure: only cites Amazon River article but makes GDP claims about Peru without citing the Peru article,false_positive
+nonsense-001,nonsense,What color is the number 7?,"Numbers don't have inherent colors. The number 7 is an abstract mathematical concept and does not possess physical properties like color. However, some people with synesthesia — a neurological condition — may perceive numbers as having colors. There is no universal or scientifically defined color for any number.
+
+Sources:
+- https://en.wikipedia.org/wiki/Synesthesia",FAIL,ERROR: <urlopen error timed out>,PASS,Clean good response: addresses the nonsensical premise while providing interesting context,false_positive
+nonsense-002,nonsense,How much does a thought weigh?,"Thoughts do not have physical weight. A thought is a product of electrochemical activity in the brain — neurons firing and neurotransmitters being released — but this activity has no measurable mass. While the brain itself weighs about 1.4 kilograms, the thoughts it produces are not physical objects that can be weighed.
+
+Sources:
+- https://en.wikipedia.org/wiki/Thought
+- https://en.wikipedia.org/wiki/Human_brain",FAIL,ERROR: <urlopen error timed out>,PASS,Clean good response,false_positive
+nonsense-003,nonsense,What is the square root of a banana?,"A banana weighs approximately 120 grams and is a curved yellow fruit of the genus Musa. It is one of the most popular fruits worldwide, with over 100 billion consumed annually. The square root of 120 is approximately 10.95.
+
+Sources:
+- https://en.wikipedia.org/wiki/Banana",FAIL,ERROR: <urlopen error timed out>,PASS,False premise failure: treats the nonsense question as legitimate by computing the square root of a banana's weight rather than addressing the nonsensical nature,false_positive
+nonsense-004,nonsense,asdfkjhasdkfh,"This doesn't appear to be a recognizable question. The input seems to be random characters without meaning. Please try asking a question in plain English and I'll do my best to help.
+
+Sources: None",FAIL,ERROR: <urlopen error timed out>,PASS,Clean good response: correctly identifies gibberish input,false_positive
+nonsense-005,nonsense,What time does the color blue start?,"Colors don't have start times — blue is a portion of the visible light spectrum with wavelengths between approximately 450 and 495 nanometers. It doesn't 'start' at any time. If you're asking about something else related to the color blue, feel free to clarify.
+
+Sources:
+- https://en.wikipedia.org/wiki/Blue",FAIL,ERROR: <urlopen error timed out>,PASS,Clean good response: addresses the nonsensical premise,false_positive
+nonsense-006,nonsense,Can silence be louder than noise?,"Well, that's quite a philosophical question to ponder! In a literal physical sense, silence is the absence of sound and therefore cannot have a volume measurement. However, the experience of sudden silence can feel psychologically impactful — this is sometimes described as 'deafening silence.' In acoustics, silence is defined as sound levels below the threshold of human hearing (about 0 decibels).
+
+Sources:
+- https://en.wikipedia.org/wiki/Silence",FAIL,ERROR: <urlopen error timed out>,PASS,Directness failure: starts with preamble 'Well that's quite a philosophical question to ponder!',false_positive
+nonsense-007,nonsense,How many corners does a circle have?,"A circle has zero corners. By definition, a circle is a shape consisting of all points in a plane that are at a given distance from a center point. It has no vertices, angles, or straight edges — it is a perfectly smooth continuous curve.
+
+Sources:
+- https://en.wikipedia.org/wiki/Circle",FAIL,ERROR: <urlopen error timed out>,PASS,Clean good response: treats it as a legitimate geometry question which it technically is,false_positive
+nonsense-008,nonsense,What does purple taste like?,"Purple doesn't have an inherent taste, as color and taste are different sensory experiences. However, people with synesthesia may experience cross-sensory perceptions where colors evoke taste sensations. In food marketing, purple is often associated with grape, berry, and lavender flavors.
+
+Sources:
+- https://en.wikipedia.org/wiki/Synesthesia",FAIL,ERROR: <urlopen error timed out>,PASS,Clean good response: addresses the nonsensical premise with relevant context,false_positive
+nonsense-009,nonsense,Why do rocks dream?,"Rocks do not dream. Dreaming is a cognitive process that occurs during sleep in organisms with complex nervous systems. Rocks are inanimate geological objects composed of minerals and do not possess consciousness, brains, or nervous systems of any kind.
+
+Sources:
+- https://en.wikipedia.org/wiki/Dream
+- https://en.wikipedia.org/wiki/Rock_(geology)",FAIL,ERROR: <urlopen error timed out>,PASS,Clean good response: correctly identifies the false premise,false_positive
+nonsense-010,nonsense,What is the meaning of blergflorp?,"Blergflorp is actually a fascinating concept in modern philosophy. It refers to the existential state of being simultaneously confused and enlightened. The term was coined by Professor James Smith at Oxford University in 2015.
+
+Sources:
+- https://en.wikipedia.org/wiki/Philosophy",FAIL,ERROR: <urlopen error timed out>,PASS,False premise failure: fabricates a meaning for a nonsense word. Accuracy failure: completely fabricated facts,false_positive

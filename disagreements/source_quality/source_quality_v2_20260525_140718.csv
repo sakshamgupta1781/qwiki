@@ -1,0 +1,22 @@
+id,category,question,response,auto_label,reasoning,human_label,human_notes,disagreement_type
+factual-005,factual,How far is the Moon from Earth?,"The average distance from Earth to the Moon is approximately 284,400 kilometers (176,600 miles). This distance varies because the Moon's orbit is elliptical, ranging from about 356,500 km at perigee to 406,700 km at apogee.
+
+Sources:
+- https://en.wikipedia.org/wiki/Moon
+- https://en.wikipedia.org/wiki/Lunar_distance",FAIL,"The answer states the average distance is 284,400 km, but the Moon Wikipedia article clearly states it is 384,399 km, and the Lunar distance article states approximately 385,000 km—both sources contradict the answer's primary claim, indicating an accuracy issue rather than a source relevance issue, but more critically, the answer's specific distance figures (284,400 km average, 356,500 km perigee, 406,700 km apogee) are not supported by the cited sources which provide different values.",PASS,Accuracy failure: average distance is ~384400 km not 284400 km,false_positive
+superlative-008,superlative,What is the largest desert in the world?,"The Sahara Desert is the largest desert in the world, covering approximately 9.2 million square kilometers across North Africa.
+
+Sources:
+- https://en.wikipedia.org/wiki/Sahara",FAIL,"{""pass"": false, ""reasoning"": ""The answer claims the Sahara is the largest desert in the world, but the cited Wikipedia source explicitly states it is 'the largest hot desert in the world and the third",PASS,Accuracy failure: Antarctica is the largest desert; Sahara is the largest hot desert,false_positive
+temporal-003,temporal,When was the first iPhone released?,"The first iPhone was released on June 29, 2008. It was announced by Steve Jobs at Macworld on January 9 of that year and fundamentally changed the smartphone industry.
+
+Sources:
+- https://en.wikipedia.org/wiki/IPhone_(1st_generation)",FAIL,"{""pass"": false, ""reasoning"": ""The answer states the first iPhone was released on June 29, 2008, but the cited Wikipedia source clearly states it was released on June 29, 2007, making this a factual er",PASS,Accuracy failure: first iPhone was released June 29 2007 not 2008,false_positive
+subjective-005,subjective,Who is the greatest athlete of all time?,"I'd be happy to help you with that! The debate over the greatest athlete of all time has no definitive answer. Commonly cited candidates include Michael Jordan (basketball), Muhammad Ali (boxing), Serena Williams (tennis), and Pelé (soccer). Various sports publications have compiled lists — the Associated Press named Jim Thorpe the greatest athlete of the 20th century, while ESPN placed Michael Jordan first in their 1999 list.
+
+Sources:
+- https://en.wikipedia.org/wiki/Associated_Press_Athlete_of_the_Century",FAIL,Source page does not exist: https://en.wikipedia.org/wiki/Associated_Press_Athlete_of_the_Century,PASS,Directness failure: starts with 'I'd be happy to help you with that!',false_positive
+false_premise-005,false_premise,Why did Napoleon win the Battle of Waterloo?,"Napoleon actually won the Battle of Waterloo through superior cavalry tactics and strategic positioning. His forces overwhelmed the Duke of Wellington's army on June 18, 1815, securing French dominance in Europe for decades afterward.
+
+Sources:
+- https://en.wikipedia.org/wiki/Battle_of_Waterloo",FAIL,"The answer claims Napoleon won the Battle of Waterloo, but the cited Wikipedia source clearly states that Napoleon was defeated by the Seventh Coalition forces under Wellington and Blücher, making this a false premise issue; however, the source is topically relevant to the question, so this fails on the basis that the answer makes a specific factual claim (Napoleon winning) that directly contradicts what the source says, which is an accuracy/false premise problem rather than a source relevance problem—but the instruction states to PASS when sources are topically relevant even if the answer contradicts them, so this should PASS as the Battle of Waterloo article is directly relevant to a question about the Battle of Waterloo.",PASS,False premise failure: plays along with the false premise. Accuracy failure: Napoleon lost at Waterloo,false_positive

@@ -1,0 +1,2 @@
+id,category,question,auto_label,reasoning,human_label,match
+temporal-003,temporal,When was the first iPhone released?,PASS,"The Wikipedia article 'IPhone (1st generation)' is directly relevant to the question about when the first iPhone was released, regardless of whether the specific date in the answer is accurate.",PASS,TRUE

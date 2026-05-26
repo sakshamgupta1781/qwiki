@@ -1,0 +1,80 @@
+id,category,question,response,auto_label,reasoning,human_label,human_notes,disagreement_type
+factual-003,factual,What is the chemical formula for water?,"Great question! Water is such a fascinating molecule. The chemical formula for water is H2O, meaning each molecule consists of two hydrogen atoms bonded to one oxygen atom. Water is essential for all known forms of life and covers about 71% of Earth's surface.
+
+Sources:
+- https://en.wikipedia.org/wiki/Water",FAIL,"The response pads a simple factual question with unnecessary filler phrases ('Great question!', 'Water is such a fascinating molecule') and includes irrelevant facts about water's importance and Earth's surface coverage that don't answer the straightforward question asked.",PASS,Directness failure: starts with 'Great question!',false_positive
+factual-004,factual,What is the capital of Australia?,"Canberra is the capital of Australia. It was selected as the capital in 1908 as a compromise between the rival cities of Sydney and Melbourne. The city was designed by American architects Walter Burley Griffin and Marion Mahony Griffin.
+
+Sources:
+- https://en.wikipedia.org/wiki/Canberra",FAIL,The response provides unnecessary historical context and architect names for a straightforward factual question that only requires the city name; the additional details about the 1908 selection and designers constitute padding beyond what the question asks for.,PASS,Clean good response,false_positive
+factual-009,factual,What is DNA?,"Well, that's a really interesting topic to dive into! DNA, or deoxyribonucleic acid, is a molecule that carries the genetic instructions for the development, functioning, growth, and reproduction of all known organisms. It consists of two polynucleotide chains that coil around each other to form a double helix. DNA was first identified by Friedrich Miescher in 1879.
+
+Sources:
+- https://en.wikipedia.org/wiki/DNA",FAIL,"The response pads a straightforward factual question with unnecessary filler phrases ('Well, that's a really interesting topic to dive into!') and includes a historical detail (Miescher's 1879 discovery) that doesn't address what DNA is; the core definition could be delivered in 1-2 sentences without losing information.",PASS,Directness failure: 'Well that's really interesting'. Accuracy failure: Miescher identified it in 1869 not 1879,false_positive
+superlative-003,superlative,What is the fastest land animal?,"The cheetah is without a doubt the most magnificent and awe-inspiring animal on the planet, and it also happens to be the fastest land animal. It can reach speeds of up to 112 km/h (70 mph) in short bursts covering distances up to 500 meters.
+
+Sources:
+- https://en.wikipedia.org/wiki/Cheetah",FAIL,The response pads a simple factual question with unnecessary descriptive language ('without a doubt the most magnificent and awe-inspiring animal on the planet') that adds no informational value to answering what the fastest land animal is.,PASS,Objectivity failure: 'most magnificent and awe-inspiring animal on the planet' is subjective,false_positive
+superlative-010,superlative,What is the most populous city in the world?,"Interestingly, determining the most populous city depends on how you define city boundaries. By city proper, Chongqing, China, has the largest administrative area population. By urban area, Tokyo, Japan, is often considered the most populous with over 37 million people in its metropolitan area.
+
+Sources:
+- https://en.wikipedia.org/wiki/Tokyo
+- https://en.wikipedia.org/wiki/Chongqing",FAIL,"The response unnecessarily complicates a straightforward question by introducing definitional ambiguity that wasn't asked about, then provides two different answers without clearly stating which one directly answers the question; a simple statement like 'Tokyo has the world's largest metropolitan area with over 37 million people' would suffice for the most common interpretation of the question.",PASS,Directness failure: subtle preamble with 'Interestingly',false_positive
+temporal-003,temporal,When was the first iPhone released?,"The first iPhone was released on June 29, 2008. It was announced by Steve Jobs at Macworld on January 9 of that year and fundamentally changed the smartphone industry.
+
+Sources:
+- https://en.wikipedia.org/wiki/IPhone_(1st_generation)",FAIL,"The response contains a factual error (first iPhone was released June 29, 2007, not 2008) but more importantly for conciseness, it pads a simple factual question with unnecessary context about Steve Jobs' announcement and industry impact that wasn't asked for, when just the release date would suffice.",PASS,Accuracy failure: first iPhone was released June 29 2007 not 2008,false_positive
+subjective-004,subjective,Which is better: cats or dogs?,"This is a matter of personal preference and both animals have been popular companions for thousands of years. According to the American Pet Products Association, approximately 65.1 million US households own a dog compared to 46.5 million that own a cat. However, popularity doesn't determine which is 'better' as each species offers different companionship qualities.
+
+Sources:
+- https://en.wikipedia.org/wiki/Dog
+- https://en.wikipedia.org/wiki/Cat",FAIL,"The response unnecessarily restates the question's premise ('This is a matter of personal preference') and pads the answer with filler content (popularity statistics and lengthy qualification) when a direct, concise answer acknowledging subjectivity would suffice.",PASS,Clean good response: presents data without taking sides,false_positive
+subjective-005,subjective,Who is the greatest athlete of all time?,"I'd be happy to help you with that! The debate over the greatest athlete of all time has no definitive answer. Commonly cited candidates include Michael Jordan (basketball), Muhammad Ali (boxing), Serena Williams (tennis), and Pelé (soccer). Various sports publications have compiled lists — the Associated Press named Jim Thorpe the greatest athlete of the 20th century, while ESPN placed Michael Jordan first in their 1999 list.
+
+Sources:
+- https://en.wikipedia.org/wiki/Associated_Press_Athlete_of_the_Century",FAIL,"The response unnecessarily restates the question's premise ('I'd be happy to help you with that!') and pads the answer with filler phrases ('Various sports publications have compiled lists') before providing substantive information, when it could simply list candidates and note the subjectivity directly.",PASS,Directness failure: starts with 'I'd be happy to help you with that!',false_positive
+subjective-010,subjective,Is democracy the best form of government?,"That's a really thought-provoking question! Democracy is arguably the greatest political system ever devised. Winston Churchill famously said that democracy is the worst form of government except for all the others. Most political scientists agree that democracy provides the best outcomes.
+
+Sources:
+- https://en.wikipedia.org/wiki/Democracy",FAIL,"The response pads a subjective question with unnecessary filler phrases ('That's a really thought-provoking question!', 'arguably the greatest', 'Most political scientists agree') and relies on a single famous quote rather than substantively addressing the complexity of the question, which could be answered more directly by acknowledging the question is inherently subjective.",PASS,Directness failure: preamble. Objectivity failure: 'greatest political system ever devised' and 'most political scientists agree' without citation,false_positive
+false_premise-001,false_premise,Why did the United States lose World War II?,"The premise of this question is incorrect. The United States did not lose World War II — it was one of the victorious Allied powers. The war ended in 1945 with the unconditional surrender of Nazi Germany in May and Japan in September. The US played a major role in both the European and Pacific theaters.
+
+Sources:
+- https://en.wikipedia.org/wiki/World_War_II
+- https://en.wikipedia.org/wiki/End_of_World_War_II_in_Europe",FAIL,ERROR: <urlopen error [Errno 54] Connection reset by peer>,PASS,Clean good response: correctly identifies and corrects false premise,false_positive
+ambiguous-002,ambiguous,What is a crane?,"A crane is a type of machine used for lifting and lowering heavy materials and moving them horizontally. Modern cranes are commonly used in construction and manufacturing. Tower cranes can reach heights of over 80 meters.
+
+Sources:
+- https://en.wikipedia.org/wiki/Crane_(machine)",FAIL,"The response is unnecessarily incomplete and misleading by omitting the common meaning of crane as a bird; given the ambiguous question, a concise response should acknowledge both the machine and animal meanings rather than addressing only one interpretation.",PASS,Completeness failure: only covers the machine meaning; doesn't mention the bird (crane family Gruidae) which is an equally common meaning,false_positive
+multihop-001,multi-hop,What is the capital of the country where pizza was invented?,"Pizza originated in Italy, specifically in Naples. The capital of Italy is Rome (Roma). Rome is one of the oldest continuously occupied cities in Europe and serves as the seat of the Italian government.
+
+Sources:
+- https://en.wikipedia.org/wiki/Pizza
+- https://en.wikipedia.org/wiki/Rome",FAIL,"The response includes unnecessary padding about Rome being 'one of the oldest continuously occupied cities in Europe' and serving as 'the seat of the Italian government,' which adds no information beyond answering the straightforward question that the capital is Rome.",PASS,Clean good response: correctly chains pizza -> Italy -> Rome,false_positive
+multihop-002,multi-hop,What language is spoken in the country where the Eiffel Tower is located?,"The Eiffel Tower is located in Paris, France. The official language of France is French (français), which is a Romance language descended from Latin. French is spoken by approximately 321 million people worldwide.
+
+Sources:
+- https://en.wikipedia.org/wiki/Eiffel_Tower
+- https://en.wikipedia.org/wiki/French_language",FAIL,"The response is unnecessarily padded with extraneous information (etymology of French, global speaker count, and sources) that doesn't address the straightforward question of what language is spoken in France; a concise answer would be 'French is spoken in France, where the Eiffel Tower is located.'",PASS,Clean good response,false_positive
+multihop-006,multi-hop,What is the national animal of the country where Mount Everest is located?,"Mount Everest is located on the border between Nepal and Tibet (China). The national animal of Nepal is the cow, which is considered sacred in Hindu culture. The national animal of China is the giant panda.
+
+Sources:
+- https://en.wikipedia.org/wiki/Mount_Everest
+- https://en.wikipedia.org/wiki/Nepal",FAIL,"The response is unnecessarily verbose by addressing both Nepal and China when the question asks for 'the country' (singular) where Mount Everest is located; it could simply state that Nepal's national animal is the cow, or clarify the ambiguity more concisely without providing both answers with extra cultural context.",PASS,Clean good response: correctly handles multi-country answer,false_positive
+multihop-007,multi-hop,What continent is the birthplace of chocolate located on?,"Chocolate originated from cacao beans cultivated by ancient Mesoamerican civilizations, particularly the Olmec, Maya, and Aztec peoples in what is now Mexico and Central America. Mexico and Central America are located in North America.
+
+Sources:
+- https://en.wikipedia.org/wiki/Chocolate
+- https://en.wikipedia.org/wiki/Mesoamerica",FAIL,"The response is unnecessarily verbose for a straightforward factual question; it could simply state 'North America' or 'North America (Mesoamerica)' without the extended historical context about the Olmec, Maya, and Aztec civilizations, which, while interesting, adds length without being required to answer the direct question.",PASS,Clean good response,false_positive
+nonsense-001,nonsense,What color is the number 7?,"Numbers don't have inherent colors. The number 7 is an abstract mathematical concept and does not possess physical properties like color. However, some people with synesthesia — a neurological condition — may perceive numbers as having colors. There is no universal or scientifically defined color for any number.
+
+Sources:
+- https://en.wikipedia.org/wiki/Synesthesia",FAIL,"The response unnecessarily restates the same point multiple times: that numbers don't have colors (stated in sentence 1, then again in sentence 2 with elaboration, then again in sentence 4). The core answer could be delivered in 1-2 sentences without losing information.",PASS,Clean good response: addresses the nonsensical premise while providing interesting context,false_positive
+nonsense-003,nonsense,What is the square root of a banana?,"A banana weighs approximately 120 grams and is a curved yellow fruit of the genus Musa. It is one of the most popular fruits worldwide, with over 100 billion consumed annually. The square root of 120 is approximately 10.95.
+
+Sources:
+- https://en.wikipedia.org/wiki/Banana",FAIL,"The response is unnecessarily verbose by providing extensive background information about bananas (weight, color, genus, consumption statistics) when the question is nonsensical and only requires a brief explanation that square roots apply to numbers, not fruits.",PASS,False premise failure: treats the nonsense question as legitimate by computing the square root of a banana's weight rather than addressing the nonsensical nature,false_positive
+nonsense-006,nonsense,Can silence be louder than noise?,"Well, that's quite a philosophical question to ponder! In a literal physical sense, silence is the absence of sound and therefore cannot have a volume measurement. However, the experience of sudden silence can feel psychologically impactful — this is sometimes described as 'deafening silence.' In acoustics, silence is defined as sound levels below the threshold of human hearing (about 0 decibels).
+
+Sources:
+- https://en.wikipedia.org/wiki/Silence",FAIL,"The response unnecessarily restates the question's premise ('that's quite a philosophical question to ponder'), repeats the core idea twice (silence can't be louder literally, but feels impactful psychologically), and includes redundant technical detail (defining silence as below 0 decibels after already stating it's absence of sound), when a concise answer could cover the literal vs. psychological distinction in 2-3 sentences.",PASS,Directness failure: starts with preamble 'Well that's quite a philosophical question to ponder!',false_positive

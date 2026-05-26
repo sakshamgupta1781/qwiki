@@ -1,0 +1,5 @@
+id,category,question,response,auto_label,reasoning,human_label,human_notes,disagreement_type
+subjective-005,subjective,Who is the greatest athlete of all time?,"I'd be happy to help you with that! The debate over the greatest athlete of all time has no definitive answer. Commonly cited candidates include Michael Jordan (basketball), Muhammad Ali (boxing), Serena Williams (tennis), and Pelé (soccer). Various sports publications have compiled lists — the Associated Press named Jim Thorpe the greatest athlete of the 20th century, while ESPN placed Michael Jordan first in their 1999 list.
+
+Sources:
+- https://en.wikipedia.org/wiki/Associated_Press_Athlete_of_the_Century",FAIL,Source page does not exist: https://en.wikipedia.org/wiki/Associated_Press_Athlete_of_the_Century,PASS,Directness failure: starts with 'I'd be happy to help you with that!',false_positive

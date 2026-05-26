@@ -1,0 +1,5 @@
+id,category,question,response,auto_label,reasoning,human_label,human_notes,disagreement_type
+temporal-003,temporal,When was the first iPhone released?,"The first iPhone was released on June 29, 2008. It was announced by Steve Jobs at Macworld on January 9 of that year and fundamentally changed the smartphone industry.
+
+Sources:
+- https://en.wikipedia.org/wiki/IPhone_(1st_generation)",FAIL,"The answer claims the first iPhone was released on June 29, 2008, but the iPhone (1st generation) Wikipedia article covers the original iPhone released in 2007, making the answer's date claim inconsistent with the source topic, though the source itself is topically relevant to the question about the first iPhone's release date.",PASS,Accuracy failure: first iPhone was released June 29 2007 not 2008,false_positive

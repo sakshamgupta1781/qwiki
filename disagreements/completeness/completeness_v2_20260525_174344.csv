@@ -1,0 +1,17 @@
+id,category,question,response,auto_label,reasoning,human_label,human_notes,disagreement_type
+superlative-008,superlative,What is the largest desert in the world?,"The Sahara Desert is the largest desert in the world, covering approximately 9.2 million square kilometers across North Africa.
+
+Sources:
+- https://en.wikipedia.org/wiki/Sahara",FAIL,"The question asks for the largest desert in the world, but the response fails to address that Antarctica is the largest desert by the standard geographical definition (a region with less than 10 inches of annual precipitation), which is a significant alternative answer that should be covered for completeness.",PASS,Accuracy failure: Antarctica is the largest desert; Sahara is the largest hot desert,false_positive
+temporal-003,temporal,When was the first iPhone released?,"The first iPhone was released on June 29, 2008. It was announced by Steve Jobs at Macworld on January 9 of that year and fundamentally changed the smartphone industry.
+
+Sources:
+- https://en.wikipedia.org/wiki/IPhone_(1st_generation)",FAIL,"The response provides an incorrect release date (June 29, 2008 is actually the iPhone 3G release date; the original iPhone was released June 29, 2007) and conflates the announcement date with Macworld (it was announced at Macworld on January 9, 2007, not 2008), but it does address the single aspect the question asks for: when the first iPhone was released.",PASS,Accuracy failure: first iPhone was released June 29 2007 not 2008,false_positive
+subjective-009,subjective,What is the best city to live in?,"According to The Economist's Global Liveability Index 2023, Vienna, Austria, ranked as the most liveable city in the world, followed by Copenhagen and Melbourne. These rankings consider stability, healthcare, culture, environment, education, and infrastructure. Different indices may yield different results depending on the criteria used.
+
+Sources:
+- https://en.wikipedia.org/wiki/Global_Liveability_Ranking",FAIL,"The question asks for 'the best city to live in,' which is inherently subjective and depends on individual priorities (climate, cost, career opportunities, culture, family needs, etc.). The response only provides one ranking index's answer without acknowledging that 'best' varies by person and their specific criteria.",PASS,Clean good response: cites specific ranking methodology,false_positive
+nonsense-005,nonsense,What time does the color blue start?,"Colors don't have start times — blue is a portion of the visible light spectrum with wavelengths between approximately 450 and 495 nanometers. It doesn't 'start' at any time. If you're asking about something else related to the color blue, feel free to clarify.
+
+Sources:
+- https://en.wikipedia.org/wiki/Blue",FAIL,"The question is ambiguous and could refer to multiple meanings: (1) a literal time-based event (e.g., 'Blue' as a TV show or event start time), (2) a poetic/metaphorical reference, (3) a specific context like 'blue hour' in photography, or (4) a misunderstanding about color physics. The response only addresses the physics interpretation and dismisses other possible meanings without exploring them.",PASS,Clean good response: addresses the nonsensical premise,false_positive

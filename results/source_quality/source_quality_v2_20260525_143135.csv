@@ -1,0 +1,10 @@
+id,category,question,auto_label,reasoning,human_label,match
+factual-001,factual,Who discovered penicillin?,PASS,"Both cited Wikipedia articles are directly relevant to the question about who discovered penicillin, covering the discoverer (Alexander Fleming) and the discovery itself (Penicillin).",PASS,TRUE
+factual-005,factual,How far is the Moon from Earth?,PASS,Both cited Wikipedia articles (Moon and Lunar distance) are directly relevant to the question about the distance between Earth and the Moon.,PASS,TRUE
+factual-006,factual,What causes rainbows?,PASS,"The Wikipedia article on Rainbow is directly relevant to the question about what causes rainbows, as it covers the optical phenomena of refraction, dispersion, and reflection that produce rainbows.",PASS,TRUE
+superlative-008,superlative,What is the largest desert in the world?,PASS,"The Wikipedia article on the Sahara is directly relevant to a question about the largest desert in the world, as it covers the Sahara Desert and its characteristics.",PASS,TRUE
+temporal-003,temporal,When was the first iPhone released?,PASS,,PASS,TRUE
+temporal-010,temporal,When was the Eiffel Tower completed?,FAIL,The cited source (Quantum mechanics) is completely unrelated to the Eiffel Tower and its completion date.,FAIL,TRUE
+subjective-002,subjective,What is the best programming language?,PASS,"Both cited Wikipedia articles are topically relevant to a question about programming languages, covering the general topic of programming languages and Python specifically.",PASS,TRUE
+subjective-005,subjective,Who is the greatest athlete of all time?,FAIL,Source page does not exist: https://en.wikipedia.org/wiki/Associated_Press_Athlete_of_the_Century,PASS,FALSE
+false_premise-005,false_premise,Why did Napoleon win the Battle of Waterloo?,PASS,"The Wikipedia article 'Battle of Waterloo' is topically relevant to a question about the Battle of Waterloo, regardless of whether the answer's claims about Napoleon winning contradict the actual historical facts in the source.",PASS,TRUE

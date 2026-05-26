@@ -1,0 +1,5 @@
+id,category,question,response,auto_label,reasoning,human_label,human_notes,disagreement_type
+multihop-010,multi-hop,What is the GDP of the country where the Amazon River originates?,"The Amazon River originates in Peru, specifically in the Andes Mountains near Arequipa. Peru's GDP was approximately $230 billion in 2022, making it one of the larger economies in South America. Peru's economy is driven by mining, agriculture, and fishing.
+
+Sources:
+- https://en.wikipedia.org/wiki/Amazon_River",FAIL,"The question contains a false premise: the Amazon River originates in Peru, but it actually originates in Brazil (in the Mismi peak region of the Andes, which is in southern Peru according to some sources, but the river's primary source and the country where it predominantly flows is Brazil). The response accepts this false premise and provides Peru's GDP without correcting the geographical error.",PASS,Source quality failure: only cites Amazon River article but makes GDP claims about Peru without citing the Peru article,false_positive
