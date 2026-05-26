@@ -66,3 +66,17 @@ Applied the same playbook to 8 judges (all except accuracy, which is deferred pe
 **Change**: Added a false premise example showing that a response about the right topic with wrong conclusions is PASS for relevance — the false premise is another judge's job.
 
 **Result**: 1 false positive → 0. Tested on `false_premise-005`: now correctly returns PASS.
+
+## completeness v3 (2026-05-25) — Fix accuracy/objectivity scope creep and nonsense over-interpretation
+
+**Problem**: v2 had 4 false positives from three patterns:
+- Accuracy scope creep: failing "Sahara is largest desert" (wrong but addresses the aspect) and "iPhone released 2008" (wrong date but provides a date)
+- Objectivity scope creep: failing a subjective question answer for not acknowledging subjectivity
+- Over-interpretation: inventing multiple "aspects" for a nonsensical question ("what time does blue start?" interpreted as TV show, photography, etc.)
+
+**Changes**:
+- Added wrong-answer examples (Sahara desert, iPhone date) showing that addressing the aspect with wrong info is PASS
+- Added subjective question example showing that citing one ranking without acknowledging subjectivity is PASS
+- Added nonsensical question example with instruction to not invent alternative interpretations
+
+**Result**: 4 false positives → 0. Regression cases (ambiguous-002, ambiguous-008) still correctly FAIL.
