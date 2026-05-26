@@ -92,3 +92,22 @@ Applied the same playbook to 8 judges (all except accuracy, which is deferred pe
 - Added 7 few-shot examples covering context tolerance, scope boundaries, and a clear FAIL case (repetition)
 
 **Result**: 7/7 on targeted test (6 FPs → PASS, 1 regression FAIL correctly held). Awaiting full 100-case calibration.
+
+## accuracy v2 (2026-05-26) — Fix scope creep + golden set label corrections
+
+**Problem**: v1 had 25 FPs and 2 FNs. Analysis revealed:
+- 16 FPs were actually correct catches — the golden set labels were too lenient (responses had real factual errors contradicting Wikipedia)
+- 3 FPs were unverifiable claims (not in Wikipedia) correctly treated as PASS
+- 5 FPs were scope creep (safety, objectivity, gibberish)
+- 2 FNs had reasoning/verdict inconsistency (reasoning found the error but verdict was PASS)
+
+**Golden set updates**: Changed 16 cases label_accuracy from PASS to FAIL where Wikipedia directly contradicts the response's claims. Accuracy now has 23 FAIL / 77 PASS in the golden set.
+
+**Prompt changes**:
+- Added scope boundary: "You are NOT evaluating safety or objectivity"
+- Added non-answer/gibberish handling (same as source_quality)
+- Strengthened unverifiable instruction with explicit example
+- Added reasoning/verdict consistency instruction
+- Added 5 few-shot examples (contradicted date, unverifiable stat, dangerous content, subjective opinion, unverifiable-from-bad-search)
+
+**Result**: 6/6 on targeted test (scope creep PASS, unverifiable PASS, FN fixed, regressions held).

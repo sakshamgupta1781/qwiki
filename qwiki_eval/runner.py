@@ -1,5 +1,5 @@
 from .judges.directness_v2 import DirectnessJudge
-from .judges.accuracy_v1 import AccuracyJudge
+from .judges.accuracy_v2 import AccuracyJudge
 from .judges.source_quality_v2 import SourceQualityJudge
 from .judges.conciseness_v3 import ConcisenessJudge
 from .judges.objectivity_v2 import ObjectivityJudge
