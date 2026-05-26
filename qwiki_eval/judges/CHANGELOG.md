@@ -111,3 +111,20 @@ Applied the same playbook to 8 judges (all except accuracy, which is deferred pe
 - Added 5 few-shot examples (contradicted date, unverifiable stat, dangerous content, subjective opinion, unverifiable-from-bad-search)
 
 **Result**: 6/6 on targeted test (scope creep PASS, unverifiable PASS, FN fixed, regressions held).
+
+## accuracy v3 (2026-05-26) — Multi-round claim verification
+
+**Problem**: v2 ran ONE Wikipedia search based on the question, then checked all claims against those articles. Secondary claims about different topics (e.g., "Sanju Samson was the highest run scorer" in a T20 World Cup answer) were marked "unverifiable" and passed without verification.
+
+**Architecture change**: Two-round verification pipeline:
+1. Question-based search → fetch 5 articles → LLM classifies each claim as SUPPORTED / CONTRADICTED / UNVERIFIABLE
+2. For each UNVERIFIABLE claim: generate a claim-specific search query → fetch additional articles → re-verify
+
+**Critical constraint**: All verification happens exclusively through the MediaWiki API. The LLM must NOT use its own training data to verify claims — it only compares response claims against fetched Wikipedia article text.
+
+**Other changes**:
+- Per-claim structured output (individual status per claim, not just overall pass/fail)
+- Non-answer/gibberish handling carried forward from v2
+- Scope boundary (safety, objectivity) carried forward from v2
+
+**Result**: Architecture validated. Correctly catches contradictions in both initial and claim-specific search rounds. Awaiting full 100-case calibration.
