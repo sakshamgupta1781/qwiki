@@ -127,4 +127,12 @@ Applied the same playbook to 8 judges (all except accuracy, which is deferred pe
 - Non-answer/gibberish handling carried forward from v2
 - Scope boundary (safety, objectivity) carried forward from v2
 
-**Result**: Architecture validated. Correctly catches contradictions in both initial and claim-specific search rounds. Awaiting full 100-case calibration.
+**Calibration results** (100-case golden set, 74 real judgments, 26 rate-limited):
+
+| Metric | v1 | v3 | Change |
+|---|---|---|---|
+| Precision | 0.23 | **0.71** | +208% |
+| Recall | 1.00 | **0.89** | -11% |
+| F1 | 0.37 | **0.79** | +114% |
+
+TP=17, FP=7, FN=2, TN=48. Precision tripled. F1 more than doubled.
