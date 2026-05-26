@@ -1,12 +1,12 @@
-from .judges.directness_v1 import DirectnessJudge
+from .judges.directness_v2 import DirectnessJudge
 from .judges.accuracy_v1 import AccuracyJudge
-from .judges.source_quality_v1 import SourceQualityJudge
-from .judges.conciseness_v1 import ConcisenessJudge
-from .judges.objectivity_v1 import ObjectivityJudge
+from .judges.source_quality_v2 import SourceQualityJudge
+from .judges.conciseness_v2 import ConcisenessJudge
+from .judges.objectivity_v2 import ObjectivityJudge
 from .judges.safety_v2 import SafetyJudge
-from .judges.false_premise_v1 import FalsePremiseJudge
-from .judges.completeness_v1 import CompletenessJudge
-from .judges.relevance_v1 import RelevanceJudge
+from .judges.false_premise_v2 import FalsePremiseJudge
+from .judges.completeness_v2 import CompletenessJudge
+from .judges.relevance_v2 import RelevanceJudge
 from .judges.base import JudgeResult
 
 ALL_JUDGES = [
