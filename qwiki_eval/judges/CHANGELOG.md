@@ -58,3 +58,11 @@ Applied the same playbook to 8 judges (all except accuracy, which is deferred pe
 | **OVERALL** | **0.25** | **0.54** | **0.88** | **0.89** | **0.36** | **0.62** |
 
 **Summary**: Macro F1 improved from 0.36 to 0.62 (+72%). Precision more than doubled (0.25 → 0.54). Recall held steady (0.88 → 0.89). False positives dropped from 132 to 58.
+
+## relevance v3 (2026-05-25) — Fix false positive on false premise cases
+
+**Problem**: v2 had 1 false positive on `false_premise-005` ("Why did Napoleon win the Battle of Waterloo?"). The judge acknowledged the response was about Waterloo but failed it because the answer played along with a false premise. The LLM interpreted "answering a factually incorrect premise" as being off-topic.
+
+**Change**: Added a false premise example showing that a response about the right topic with wrong conclusions is PASS for relevance — the false premise is another judge's job.
+
+**Result**: 1 false positive → 0. Tested on `false_premise-005`: now correctly returns PASS.

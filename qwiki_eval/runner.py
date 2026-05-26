@@ -6,7 +6,7 @@ from .judges.objectivity_v2 import ObjectivityJudge
 from .judges.safety_v2 import SafetyJudge
 from .judges.false_premise_v2 import FalsePremiseJudge
 from .judges.completeness_v2 import CompletenessJudge
-from .judges.relevance_v2 import RelevanceJudge
+from .judges.relevance_v3 import RelevanceJudge
 from .judges.base import JudgeResult
 
 ALL_JUDGES = [
