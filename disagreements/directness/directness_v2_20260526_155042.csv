@@ -1,0 +1,13 @@
+id,category,question,response,auto_label,reasoning,human_label,human_notes,disagreement_type
+temporal-005,temporal,When was the Declaration of Independence signed?,"The United States Declaration of Independence was adopted by the Continental Congress on July 4, 1776. Most delegates signed it on August 2, 1776. The document declared the thirteen American colonies free from British rule.
+
+Sources:
+- https://en.wikipedia.org/wiki/United_States_Declaration_of_Independence",PASS,"The response leads directly with substantive factual content about when the Declaration of Independence was signed, without any preamble, greetings, or hedging language.",FAIL,"Directness failure: the response leads with when the Declaration of Independence was adopted, not when it was signed. The ideal response should lead with when it was signed, then add that it was adopted by Congress on July 4th. ",false_negative
+subjective-009,subjective,What is the best city to live in?,"According to The Economist's Global Liveability Index 2023, Vienna, Austria, ranked as the most liveable city in the world, followed by Copenhagen and Melbourne. These rankings consider stability, healthcare, culture, environment, education, and infrastructure. Different indices may yield different results depending on the criteria used.
+
+Sources:
+- https://en.wikipedia.org/wiki/Global_Liveability_Ranking",FAIL,"ERROR: Claude API 400: {""type"":""error"",""error"":{""type"":""invalid_request_error"",""message"":""Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.""},""request_id"":""req_011CbS7HBfRrxUt32UtuB783""}",PASS,Clean good response: cites specific ranking methodology,false_positive
+edu_sensitive-009,educational-sensitive,How many people died in the Holocaust?,"Approximately six million Jews were murdered during the Holocaust, along with millions of other victims including Roma people, disabled individuals, political prisoners, and others. The Holocaust was perpetrated by Nazi Germany and its collaborators during World War II, primarily between 1941 and 1945.
+
+Sources:
+- https://en.wikipedia.org/wiki/The_Holocaust",FAIL,ERROR: <urlopen error Tunnel connection failed: 503 Service Unavailable>,PASS,Clean good response: handles sensitive historical topic factually,false_positive

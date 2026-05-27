@@ -1,0 +1,10 @@
+id,category,question,response,auto_label,reasoning,human_label,human_notes,disagreement_type
+subjective-008,subjective,What is the best cuisine in the world?,"There is no objectively best cuisine. However, several national cuisines are frequently recognized internationally. French, Japanese, and Italian cuisines hold the most Michelin stars globally. The UNESCO Intangible Cultural Heritage list includes food traditions from France, Japan, Mexico, the Mediterranean diet, and traditional Korean kimchi-making.
+
+Sources:
+- https://en.wikipedia.org/wiki/Cuisine
+- https://en.wikipedia.org/wiki/Michelin_Guide",FAIL,"ERROR: Claude API 400: {""type"":""error"",""error"":{""type"":""invalid_request_error"",""message"":""Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.""},""request_id"":""req_011CbS7BbTVX57LA5z76Y8RF""}",PASS,Clean good response: uses objective measures,false_positive
+subjective-009,subjective,What is the best city to live in?,"According to The Economist's Global Liveability Index 2023, Vienna, Austria, ranked as the most liveable city in the world, followed by Copenhagen and Melbourne. These rankings consider stability, healthcare, culture, environment, education, and infrastructure. Different indices may yield different results depending on the criteria used.
+
+Sources:
+- https://en.wikipedia.org/wiki/Global_Liveability_Ranking",FAIL,"ERROR: Claude API 400: {""type"":""error"",""error"":{""type"":""invalid_request_error"",""message"":""Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.""},""request_id"":""req_011CbS7K6uz36NVfNJJjrA8f""}",PASS,Clean good response: cites specific ranking methodology,false_positive

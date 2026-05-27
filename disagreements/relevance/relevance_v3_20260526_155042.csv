@@ -1,0 +1,10 @@
+id,category,question,response,auto_label,reasoning,human_label,human_notes,disagreement_type
+factual-007,factual,Who wrote Romeo and Juliet?,"William Shakespeare wrote Romeo and Juliet, believed to have been composed between 1594 and 1596. It was first published in 1597. The play is one of Shakespeare's most famous tragedies and has been adapted into numerous films, operas, and ballets. Speaking of Shakespeare, he also wrote many other famous works like Hamlet, Macbeth, and A Midsummer Night's Dream. His influence on the English language is immeasurable, and he coined many words still in use today.
+
+Sources:
+- https://en.wikipedia.org/wiki/Romeo_and_Juliet",PASS,"The response directly answers the question about who wrote Romeo and Juliet (William Shakespeare) and provides relevant contextual information about the play's composition, publication, and adaptations; while it includes broader information about Shakespeare's other works, this context supports understanding his significance as the author and remains on-topic.",FAIL,Conciseness and relevance failure: goes off on tangent about Shakespeare's other works,false_negative
+subjective-008,subjective,What is the best cuisine in the world?,"There is no objectively best cuisine. However, several national cuisines are frequently recognized internationally. French, Japanese, and Italian cuisines hold the most Michelin stars globally. The UNESCO Intangible Cultural Heritage list includes food traditions from France, Japan, Mexico, the Mediterranean diet, and traditional Korean kimchi-making.
+
+Sources:
+- https://en.wikipedia.org/wiki/Cuisine
+- https://en.wikipedia.org/wiki/Michelin_Guide",FAIL,"ERROR: Claude API 400: {""type"":""error"",""error"":{""type"":""invalid_request_error"",""message"":""Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.""},""request_id"":""req_011CbS7Ck5SDM4UHQDQPedA2""}",PASS,Clean good response: uses objective measures,false_positive
