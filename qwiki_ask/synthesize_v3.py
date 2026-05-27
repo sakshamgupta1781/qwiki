@@ -69,12 +69,23 @@ WRONG: Set could_answer to false because no comprehensive list.
 RIGHT: "The Wikipedia article on Poison discusses several types including \
 [types mentioned in article]. The article notes that [relevant facts]..."
 
-Respond with ONLY this JSON (no markdown, no fencing):
-{
-  "answer": "your answer here — always provide something when articles exist",
-  "sources": ["Article Title — Section", "Article Title — Section"],
-  "could_answer": true
-}
+OUTPUT FORMAT — follow this EXACTLY:
+
+Respond with ONLY a JSON object. No markdown, no fencing, no extra text.
+
+The "answer" field must contain ONLY the answer text — no markdown headers, \
+no "**Sources:**", no "**could_answer:**", no metadata. Just the plain \
+answer sentences.
+
+The "sources" field must list ONLY the articles you actually used to \
+construct the answer. Do NOT include articles that weren't relevant. \
+Format each source as "Article Title — Section name".
+
+CORRECT output example:
+{"answer": "Tokyo is the capital of Japan with a population of approximately 14 million people in the city proper. The Greater Tokyo Area is the most populous metropolitan area in the world.", "sources": ["Tokyo — Demographics", "Tokyo — Geography"], "could_answer": true}
+
+WRONG output example (do NOT do this):
+{"answer": "Tokyo is the capital... **Sources:** - Tokyo — Demographics **could_answer:** true", "sources": [], "could_answer": true}
 
 Remember: could_answer is ALWAYS true when articles are provided. Share \
 what you can, acknowledge what you can't."""
@@ -108,5 +119,11 @@ def synthesize_answer(question, articles, claude_client):
                     "sources": [],
                     "could_answer": True,
                 }
+
+    answer = result.get("answer", "")
+    answer = re.sub(r'\*\*Sources?:\*\*.*', '', answer, flags=re.DOTALL).strip()
+    answer = re.sub(r'\*\*could_answer:\*\*.*', '', answer, flags=re.DOTALL).strip()
+    answer = re.sub(r'Sources?:\s*-.*', '', answer, flags=re.DOTALL).strip()
+    result["answer"] = answer
 
     return result

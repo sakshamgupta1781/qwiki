@@ -14,7 +14,18 @@ def format_output(articles, result):
     source_items = result.get("sources", [])
     source_lines = "\n".join(f"• {s}" for s in source_items) if source_items else ""
 
-    url_lines = "\n".join(f"• {a['url']}" for a in articles[:5])
+    if source_items:
+        source_titles = set()
+        for s in source_items:
+            title = s.split(" — ")[0].split(" - ")[0].strip()
+            source_titles.add(title.lower())
+
+        relevant = [a for a in articles
+                    if a["title"].lower() in source_titles
+                    or any(t in a["title"].lower() for t in source_titles)]
+        url_lines = "\n".join(f"• {a['url']}" for a in relevant) if relevant else ""
+    else:
+        url_lines = "\n".join(f"• {a['url']}" for a in articles[:5])
 
     output = f"""
 {bar}

@@ -67,12 +67,22 @@ Question: "Why did the US lose World War II?"
 Expected: "The US did not lose World War II — it was among the Allied \
 victors. The war ended in 1945 with..."
 
-Respond with ONLY this JSON (no markdown, no fencing):
-{
-  "answer": "your direct answer here",
-  "sources": ["Article Title — Section", "Article Title — Section"],
-  "could_answer": true/false
-}
+OUTPUT FORMAT — follow this EXACTLY:
+
+Respond with ONLY a JSON object. No markdown, no fencing, no extra text.
+
+The "answer" field must contain ONLY the answer text — no markdown headers, \
+no "**Sources:**", no "**could_answer:**", no metadata. Just plain answer \
+sentences.
+
+The "sources" field must list ONLY the articles you actually used. Do NOT \
+include articles that weren't relevant to the answer.
+
+CORRECT example:
+{"answer": "Alexander Fleming discovered penicillin in 1928.", "sources": ["Penicillin — History"], "could_answer": true}
+
+WRONG example (do NOT do this):
+{"answer": "Fleming discovered penicillin... **Sources:** Penicillin **could_answer:** true", "sources": [], "could_answer": true}
 
 Set could_answer to false if the articles don't contain enough \
 information to answer the question."""
@@ -106,5 +116,11 @@ def synthesize_answer(question, articles, claude_client):
                     "sources": [],
                     "could_answer": True,
                 }
+
+    answer = result.get("answer", "")
+    answer = re.sub(r'\*\*Sources?:\*\*.*', '', answer, flags=re.DOTALL).strip()
+    answer = re.sub(r'\*\*could_answer:\*\*.*', '', answer, flags=re.DOTALL).strip()
+    answer = re.sub(r'Sources?:\s*-.*', '', answer, flags=re.DOTALL).strip()
+    result["answer"] = answer
 
     return result
