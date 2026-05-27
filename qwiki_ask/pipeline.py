@@ -1,8 +1,8 @@
 import sys
 
 from .safety import check_safety
-from .search import search_and_fetch
-from .synthesize import synthesize_answer
+from .search_v2 import search_and_fetch
+from .synthesize_v2 import synthesize_answer
 from .formatter import (
     format_output, format_refusal, format_gibberish,
     format_no_results, format_no_answer,
