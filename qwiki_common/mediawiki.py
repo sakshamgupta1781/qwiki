@@ -5,9 +5,10 @@ from urllib.parse import quote, urlencode
 from urllib.request import Request, urlopen
 
 WIKIPEDIA_API_URL = "https://en.wikipedia.org/w/api.php"
-USER_AGENT = "qwiki/1.0"
+USER_AGENT = "qwiki/1.0 (https://github.com/sakshamgupta1781/qwiki)"
 REQUEST_DELAY = 0.5
-MAX_RETRIES = 3
+MAX_RETRIES = 5
+MIN_RETRY_WAIT = 5
 
 
 class MediaWikiClient:
@@ -30,8 +31,16 @@ class MediaWikiClient:
                     return json.loads(resp.read())
             except HTTPError as e:
                 self._last_request_time = time.time()
-                if e.code == 429:
-                    time.sleep(2 ** (attempt + 1))
+                if e.code in (429, 503):
+                    retry_after = e.headers.get("Retry-After")
+                    if retry_after:
+                        try:
+                            wait = int(retry_after)
+                        except ValueError:
+                            wait = MIN_RETRY_WAIT
+                    else:
+                        wait = min(MIN_RETRY_WAIT * (2 ** attempt), 60)
+                    time.sleep(wait)
                     continue
                 raise
 
