@@ -52,6 +52,7 @@ def main():
     parser.add_argument("--model", help="Claude model to use (interactive picker if omitted)")
     parser.add_argument("--debug", action="store_true", help="Show debug output for each pipeline phase")
     parser.add_argument("--no-eval", action="store_true", help="Skip eval judges (faster)")
+    parser.add_argument("--no-deep-search", action="store_true", help="Disable deep search retry")
 
     args = parser.parse_args()
     question = " ".join(args.question)
@@ -60,4 +61,5 @@ def main():
     model = args.model or pick_model_interactive(api_key)
 
     client = ClaudeClient(api_key, model)
-    run(question, client, debug=args.debug, run_eval=not args.no_eval)
+    run(question, client, debug=args.debug, run_eval=not args.no_eval,
+        enable_deep_search=not args.no_deep_search)

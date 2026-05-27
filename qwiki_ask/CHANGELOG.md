@@ -83,4 +83,43 @@ First version of the qwiki-ask pipeline with 4 phases:
 
 **Infrastructure win**: The MediaWiki User-Agent fix (compliant header → 200 req/min instead of 10 req/min) eliminated all Wikipedia rate limiting. v1 had 7 errors, v2 has 0 after retries.
 
-**Next steps for v3**: The search pipeline needs to detect ambiguity BEFORE the initial search and allocate article slots per-meaning from the start.
+### Refusal rate baseline (50-case refusal test suite)
+
+| Metric | v2 |
+|---|---|
+| Total cases | 50 |
+| Answered | 22 |
+| Refused | 28 |
+| Overall refusal rate | 56% |
+| **Incorrect refusals** | **13/35** (37%) |
+| Incorrect answers | 0/15 (perfect safety) |
+
+Incorrect refusal root causes:
+- Wrong articles fetched (6 cases): search query surfaces irrelevant articles
+- Synthesis too strict (3 cases): articles have partial info but synthesis refuses
+- Time-sensitive/prediction (4 cases): refuses instead of sharing historical data
+
+## v3 (2026-05-27) — Deep search + synthesis never-refuse improvements
+
+### Problem
+
+v2 incorrectly refuses 13 of 35 answerable questions (37% incorrect refusal rate). All failures are `no_answer` — synthesis has articles but says "I can't answer."
+
+### Search pipeline changes (`search_v3.py`)
+
+- **Deep search mode**: When synthesis fails, a single retry step generates a refined Wikipedia search query and re-runs synthesis with expanded articles
+- Single-turn only — if the second attempt also fails, accept the failure
+- Deep search prompt uses ONLY question context for the refined query — no answer leaking, no web search, no training data
+- Disabled with `--no-deep-search` flag
+
+### Synthesis prompt changes (`synthesize_v3.py`)
+
+- **Never refuse when articles exist**: `could_answer: false` is only for zero articles. When articles exist but don't fully answer, the tool must share what IS available with a caveat
+- **Time-sensitive handling**: "I cannot provide real-time data, but according to Wikipedia, as of [date]..." instead of refusing
+- **Prediction handling**: "I cannot predict the outcome, but based on Wikipedia, here is the history..." instead of refusing
+- **Partial info**: "I wasn't able to find the exact answer, but based on the available articles..." instead of refusing
+- All constraints maintained: Wikipedia-only, no training data, no web search
+
+### Test results
+
+Awaiting v3 refusal test run.

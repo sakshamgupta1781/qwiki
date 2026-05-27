@@ -1,8 +1,8 @@
 import sys
 
 from .safety import check_safety
-from .search_v2 import search_and_fetch
-from .synthesize_v2 import synthesize_answer
+from .search_v3 import search_and_fetch, deep_search
+from .synthesize_v3 import synthesize_answer
 from .formatter import (
     format_output, format_refusal, format_gibberish,
     format_no_results, format_no_answer,
@@ -10,7 +10,7 @@ from .formatter import (
 from .status import StatusLine
 
 
-def run(question, claude_client, debug=False, run_eval=True):
+def run(question, claude_client, debug=False, run_eval=True, enable_deep_search=True):
     status = StatusLine()
 
     status.update("Checking safety...")
@@ -51,6 +51,30 @@ def run(question, claude_client, debug=False, run_eval=True):
 
     status.update("Synthesizing answer from Wikipedia...")
     result = synthesize_answer(question, articles, claude_client)
+
+    if not result.get("could_answer", True) and enable_deep_search:
+        status.complete("First attempt insufficient — trying deep search...")
+        status.update("Deep search: refining query...")
+
+        try:
+            expanded_articles, refined_query = deep_search(
+                question, search_query, articles, claude_client)
+        except Exception as e:
+            status.complete(f"Deep search failed: {e}")
+            expanded_articles = articles
+
+        if len(expanded_articles) > len(articles):
+            status.complete(f"Deep search found {len(expanded_articles) - len(articles)} new article(s)")
+            if debug:
+                new_titles = [a['title'] for a in expanded_articles if a not in articles]
+                for t in new_titles:
+                    print(f"  \033[90m[new] {t}\033[0m", file=sys.stderr)
+
+            status.update("Re-synthesizing with expanded articles...")
+            result = synthesize_answer(question, expanded_articles, claude_client)
+            articles = expanded_articles
+        else:
+            status.complete("Deep search found no new articles")
 
     if not result.get("could_answer", True):
         status.complete("Could not determine answer")
