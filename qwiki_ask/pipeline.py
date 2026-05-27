@@ -14,7 +14,7 @@ def run(question, claude_client, debug=False, run_eval=True):
     status = StatusLine()
 
     status.update("Checking safety...")
-    classification, search_query = check_safety(question, claude_client)
+    classification = check_safety(question, claude_client)
 
     if classification == "UNSAFE":
         status.complete("Blocked — unsafe query")
@@ -26,14 +26,16 @@ def run(question, claude_client, debug=False, run_eval=True):
         print(format_gibberish())
         return
 
-    status.complete(f"Safe — query: \"{search_query}\"")
+    status.complete("Safe")
 
-    status.update("Searching Wikipedia...")
+    status.update("Optimizing search query...")
     try:
-        articles = search_and_fetch(search_query, question)
+        articles, search_query = search_and_fetch(question, claude_client)
     except Exception as e:
         status.complete(f"Wikipedia search failed: {e}")
         return
+
+    status.update(f"Searching Wikipedia for \"{search_query}\"...")
 
     if not articles:
         status.complete("No articles found")

@@ -49,10 +49,7 @@ Query: "What color is the number 7?"
 Classification: SAFE (intelligible question, even if nonsensical)
 
 Respond with ONLY this JSON (no markdown, no fencing):
-{"classification": "SAFE/UNSAFE/GIBBERISH", "search_query": "optimized search terms"}
-
-For SAFE queries, also provide optimized Wikipedia search terms in search_query.
-For UNSAFE or GIBBERISH queries, set search_query to an empty string."""
+{"classification": "SAFE/UNSAFE/GIBBERISH"}"""
 
 
 def check_safety(question, claude_client):
@@ -67,11 +64,9 @@ def check_safety(question, claude_client):
             if match:
                 result = json.loads(match.group(0))
             else:
-                return "SAFE", question
+                return "SAFE"
 
         classification = result.get("classification", "SAFE").upper()
-        search_query = result.get("search_query", question)
-
-        return classification, search_query
+        return classification
     except Exception:
-        return "SAFE", question
+        return "SAFE"
