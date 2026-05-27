@@ -1,0 +1,14 @@
+{
+  "question": "asdfkjh",
+  "safety_classification": "GIBBERISH",
+  "search_query_raw": null,
+  "articles": [],
+  "ambiguity_detected": false,
+  "ambiguity_meanings": [],
+  "synthesis_raw_response": null,
+  "synthesis_could_answer": null,
+  "synthesis_answer": null,
+  "synthesis_explanation": null,
+  "final_status": "gibberish",
+  "final_response": null
+}
