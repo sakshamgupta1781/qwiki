@@ -50,9 +50,20 @@ First version of the qwiki-ask pipeline with 4 phases:
 - **Stronger subjective handling**: Added explicit WRONG/RIGHT example pairs showing how to present surveys, rankings, and multiple candidates instead of opinions
 - **All constraints maintained**: Wikipedia-only, no training data for answers, no web search
 
-### Test results
+### Test results (50-case suite, 41 answered, 5 refused)
 
-Awaiting full 50-case v2 test run (in progress). Key metrics to watch:
-- Ambiguous category: 88.6% → target 100%
-- Completeness failures: 4 → target 0
-- Subjective handling: watching for maintained/improved objectivity scores
+| Metric | v1 | v2 | Change |
+|---|---|---|---|
+| Trusted (7 judges) | 98.0% | 98.1% | +0.1% |
+| Composite (all 9) | 89.8% | 88.9% | -0.8% |
+
+**Per-category trusted scores**:
+- factual_numeric: 97.1% → **100.0%** (+2.9%)
+- ambiguous: 88.6% → **87.1%** (-1.4%) — not improved
+- All other categories: unchanged at 100%
+
+**Key finding**: The ambiguity detection fires correctly but doesn't improve results because the initial Wikipedia search already fills 5 article slots with one meaning (e.g., all Python programming language articles). The multi-search for other meanings fetches articles, but the synthesis prompt doesn't receive enough diverse content because the initial search dominates.
+
+**Completeness failures**: 4 in v1 → 4 in v2 (am-001, am-002, am-003, am-005 still fail). Only am-004 ("Mercury") passes because Wikipedia's disambiguation naturally returns varied articles.
+
+**Next steps for v3**: The search pipeline needs to LIMIT initial results to 2-3 articles, reserving slots for ambiguity search results. Or restructure to search per-meaning from the start when ambiguity is detected.
