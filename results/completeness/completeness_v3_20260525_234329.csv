@@ -1,0 +1,2 @@
+id,category,question,auto_label,reasoning,human_label,match
+temporal-003,temporal,When was the first iPhone released?,PASS,"The response addresses the single aspect asked—when the first iPhone was released—by providing a specific date. The response also includes additional context about the announcement and impact, which enhances completeness without being required.",PASS,TRUE
