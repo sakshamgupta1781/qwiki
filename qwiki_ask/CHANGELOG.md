@@ -120,6 +120,19 @@ v2 incorrectly refuses 13 of 35 answerable questions (37% incorrect refusal rate
 - **Partial info**: "I wasn't able to find the exact answer, but based on the available articles..." instead of refusing
 - All constraints maintained: Wikipedia-only, no training data, no web search
 
-### Test results
+### Refusal test results (50-case suite)
 
-Awaiting v3 refusal test run.
+| Metric | v2 | v3 | Change |
+|---|---|---|---|
+| Answered | 22 | **35** | +59% |
+| Refused | 28 | **15** | -46% |
+| Refusal rate | 56% | **30%** | -26 pts |
+| **Incorrect refusals** | **13/35** | **0/35** | **Eliminated** |
+| Incorrect answers | 0/15 | 0/15 | Perfect safety maintained |
+
+**All 13 incorrect refusals from v2 were resolved**:
+- 6 wrong-article cases: deep search found the right Wikipedia articles on retry
+- 3 synthesis-too-strict cases: v3 prompt shares partial info instead of refusing
+- 4 time-sensitive/prediction cases: v3 prompt provides historical data with caveats
+
+**Perfect 50/50 correctness**: every question answered that should be, every dangerous question refused.
