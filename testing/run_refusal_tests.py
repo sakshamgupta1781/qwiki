@@ -13,8 +13,9 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 from qwiki_common.claude import ClaudeClient
 from qwiki_ask.safety import check_safety
-from qwiki_ask.search_v2 import search_and_fetch, optimize_query, check_ambiguity
-from qwiki_ask.synthesize_v2 import synthesize_answer
+from qwiki_ask.search_v3 import search_and_fetch, optimize_query, deep_search
+from qwiki_ask.search_v2 import check_ambiguity
+from qwiki_ask.synthesize_v3 import synthesize_answer
 from qwiki_ask.formatter import format_output
 
 CASE_COOLDOWN = 10
@@ -118,13 +119,37 @@ def run_ask_with_diagnostics(question, claude_client):
 
     if not result.get("could_answer", True):
         diag["synthesis_explanation"] = result.get("answer", "no explanation provided")
-        diag["final_status"] = "no_answer"
-        return {
-            "status": "no_answer",
-            "refusal_reason": f"synthesis: {result.get('answer', 'could_not_answer')[:200]}",
-            "articles": articles, "search_query": search_query,
-            "article_titles": article_titles,
-        }, diag
+        diag["deep_search_attempted"] = True
+
+        expanded_articles, refined_query = deep_search(
+            question, search_query, articles, claude_client)
+        diag["deep_search_refined_query"] = refined_query
+        diag["deep_search_new_articles"] = [
+            {"title": a["title"], "url": a["url"], "extract_length": len(a["extract"]),
+             "extract": a["extract"]}
+            for a in expanded_articles if a not in articles
+        ]
+
+        if len(expanded_articles) > len(articles):
+            result = synthesize_answer(question, expanded_articles, claude_client)
+            diag["deep_search_synthesis_response"] = json.dumps(result, ensure_ascii=False)
+            articles = expanded_articles
+            article_titles = "|".join(a["title"] for a in articles)
+
+            diag["articles"] = [
+                {"title": a["title"], "url": a["url"],
+                 "extract_length": len(a["extract"]), "extract": a["extract"]}
+                for a in articles
+            ]
+
+        if not result.get("could_answer", True):
+            diag["final_status"] = "no_answer"
+            return {
+                "status": "no_answer",
+                "refusal_reason": f"synthesis: {result.get('answer', 'could_not_answer')[:200]}",
+                "articles": articles, "search_query": search_query,
+                "article_titles": article_titles,
+            }, diag
 
     output = format_output(articles, result)
     diag["final_status"] = "ok"
