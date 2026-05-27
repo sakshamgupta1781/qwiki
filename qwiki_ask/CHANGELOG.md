@@ -50,20 +50,37 @@ First version of the qwiki-ask pipeline with 4 phases:
 - **Stronger subjective handling**: Added explicit WRONG/RIGHT example pairs showing how to present surveys, rankings, and multiple candidates instead of opinions
 - **All constraints maintained**: Wikipedia-only, no training data for answers, no web search
 
-### Test results (50-case suite, 41 answered, 5 refused)
+### Test results (50-case suite, 41 answered, 5 refused, 0 errors)
 
 | Metric | v1 | v2 | Change |
 |---|---|---|---|
-| Trusted (7 judges) | 98.0% | 98.1% | +0.1% |
-| Composite (all 9) | 89.8% | 88.9% | -0.8% |
+| Trusted (7 judges) | 98.0% | 97.6% | -0.4% |
+| Composite (all 9) | 89.8% | 88.1% | -1.7% |
+| Errors | 7 | **0** | Fixed |
+
+**Per-judge pass rates**:
+
+| Judge | v1 | v2 | Trust |
+|---|---|---|---|
+| directness | 100.0% | 100.0% | ✓ |
+| objectivity | 100.0% | 100.0% | ✓ |
+| safety | 100.0% | 100.0% | ✓ |
+| false_premise | 100.0% | 100.0% | ✓ |
+| relevance | 100.0% | 100.0% | ✓ |
+| accuracy | 95.0% | 92.7% | ✓ |
+| completeness | 90.5% | 90.2% | ✓ |
+| source_quality | 67.6% | 63.4% | |
+| conciseness | 52.4% | 46.3% | |
 
 **Per-category trusted scores**:
-- factual_numeric: 97.1% → **100.0%** (+2.9%)
-- ambiguous: 88.6% → **87.1%** (-1.4%) — not improved
-- All other categories: unchanged at 100%
+- ambiguous: 88.6% → 88.6% (unchanged)
+- multi_part: 100.0% → 97.1% (-2.9%)
+- All other categories: unchanged
 
-**Key finding**: The ambiguity detection fires correctly but doesn't improve results because the initial Wikipedia search already fills 5 article slots with one meaning (e.g., all Python programming language articles). The multi-search for other meanings fetches articles, but the synthesis prompt doesn't receive enough diverse content because the initial search dominates.
+**Key finding**: v2 is essentially flat vs v1 on trusted scores. The ambiguity detection fires correctly and fetches diverse articles (verified manually with "What is Python?" covering programming language, snake, Monty Python, and Cold War codename). However, the 50-case test suite shows no measurable improvement because the completeness judge still flags the same 4 ambiguous cases.
 
-**Completeness failures**: 4 in v1 → 4 in v2 (am-001, am-002, am-003, am-005 still fail). Only am-004 ("Mercury") passes because Wikipedia's disambiguation naturally returns varied articles.
+**Completeness failures**: 4 in v1 → 4 in v2 (am-001, am-002, am-003, am-005 still fail).
 
-**Next steps for v3**: The search pipeline needs to LIMIT initial results to 2-3 articles, reserving slots for ambiguity search results. Or restructure to search per-meaning from the start when ambiguity is detected.
+**Infrastructure win**: The MediaWiki User-Agent fix (compliant header → 200 req/min instead of 10 req/min) eliminated all Wikipedia rate limiting. v1 had 7 errors, v2 has 0 after retries.
+
+**Next steps for v3**: The search pipeline needs to detect ambiguity BEFORE the initial search and allocate article slots per-meaning from the start.
