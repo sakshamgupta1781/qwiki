@@ -6,6 +6,7 @@ from .banner import print_banner
 from .commands import dispatch
 from .config import load_config, setup_interactive
 from .deps import check_dependencies
+from .picker import pick_command
 
 HISTORY_FILE = os.path.expanduser("~/.qwiki/history")
 
@@ -44,6 +45,16 @@ def main():
 
             if not line:
                 continue
+
+            if line == "/":
+                selected = pick_command()
+                if not selected:
+                    continue
+                if selected in ("ask",):
+                    extra = input(f"\033[32mqwiki> \033[0m/{selected} ").strip()
+                    line = f"/{selected} {extra}"
+                else:
+                    line = f"/{selected}"
 
             if not line.startswith("/"):
                 print("  Commands start with /. Type /help for available commands.")
