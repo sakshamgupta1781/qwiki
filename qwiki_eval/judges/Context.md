@@ -102,33 +102,35 @@ Every judge handles **refusal responses** (where the tool refuses a dangerous qu
 - **Refusals**: PASS
 - **Note**: Brief context-setting that directly supports the answer is acceptable
 
-## v0 Calibration Baseline
+## Calibration Results
 
-Benchmarked against the 100-case golden eval set using `claude-haiku-4-5-20251001`. These are the initial results **without any prompt tuning** — the starting point for iterative improvement.
+### v0 Baseline (before tuning)
 
-```
-Judge               Precision    Recall        F1     N
-─────────────────────────────────────────────────────────
-directness               0.50      1.00      0.67   100
-accuracy                 0.08      1.00      0.16   100
-source_quality           0.03      0.67      0.05   100
-conciseness              0.12      1.00      0.21   100
-objectivity              0.38      1.00      0.56   100
-safety                   0.50      1.00      0.67   100
-false_premise            0.27      1.00      0.42   100
-completeness             0.07      0.25      0.11   100
-relevance                0.11      1.00      0.19   100
-─────────────────────────────────────────────────────────
-OVERALL (macro)          0.23      0.88      0.34   900
-```
+Macro F1: **0.36**. Recall strong (0.88), precision low (0.23). Root cause: scope creep — every judge tried to evaluate dimensions outside its job.
 
-**Key observations**:
-- **Recall is strong** (0.88 macro) — judges catch most real failures
-- **Precision is low** (0.23 macro) — too many false alarms (judges flag PASS cases as FAIL)
-- **Best judges**: Safety (F1=0.67), Directness (F1=0.67), Objectivity (F1=0.56)
-- **Worst judges**: Source Quality (F1=0.05), Completeness (F1=0.11), Accuracy (F1=0.16)
-- The accuracy judge's low precision (0.08) means it's flagging correct answers as inaccurate — likely because its Wikipedia verification is too aggressive
-- Completeness has both low precision (0.07) and low recall (0.25) — the weakest overall
+### Latest (after tuning all judges to v2/v3)
+
+| Judge | P | R | F1 | v0 F1 | Improvement |
+|---|---|---|---|---|---|
+| safety | 1.00 | 1.00 | **1.00** | 0.67 | +0.33 |
+| directness | 1.00 | 0.88 | **0.93** | 0.64 | +0.29 |
+| false_premise | 0.80 | 1.00 | **0.89** | 0.42 | +0.47 |
+| completeness | 0.75 | 1.00 | **0.86** | 0.11 | +0.75 |
+| objectivity | 0.71 | 1.00 | **0.83** | 0.53 | +0.30 |
+| accuracy | 0.65 | 0.87 | **0.74** | 0.37 | +0.37 |
+| relevance | 1.00 | 0.50 | **0.67** | 0.17 | +0.50 |
+| source_quality | 0.33 | 0.67 | **0.44** | 0.16 | +0.28 |
+| conciseness | 0.25 | 1.00 | **0.40** | 0.21 | +0.19 |
+
+**Macro F1: 0.36 → 0.75 (+108%)**. Every judge improved. Rate-limit errors: 46 → 1 (MediaWiki User-Agent fix).
+
+## Key Learnings from Judge Tuning
+
+1. **Scope creep is the #1 problem**: Every judge tries to evaluate all dimensions. Fix: explicit "CRITICAL: you evaluate ONLY X" boundary + "not your job" list.
+2. **Few-shot examples from actual FPs**: Generic examples don't work. Use the exact cases that caused false positives.
+3. **Reasoning/verdict inconsistency**: LLMs sometimes write correct reasoning but wrong JSON verdict. Fix: "CRITICAL: JSON verdict MUST match your reasoning."
+4. **Don't show source content to scope-sensitive judges**: The source_quality judge fact-checked answers when it saw article content. Fix: only pass article titles.
+5. **Golden set labels can be wrong**: 16 accuracy labels were too lenient — the judge was right, the labels were wrong.
 
 ## Adding or Modifying a Judge
 
