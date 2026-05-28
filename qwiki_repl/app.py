@@ -1,6 +1,7 @@
 import os
-import readline
 import sys
+import tty
+import termios
 
 from .banner import print_banner
 from .commands import dispatch
@@ -9,15 +10,79 @@ from .deps import check_dependencies
 from .picker import pick_command
 
 HISTORY_FILE = os.path.expanduser("~/.qwiki/history")
+PROMPT = "\033[32mqwiki> \033[0m"
 
 
-def setup_readline():
+def read_input():
+    sys.stdout.write(PROMPT)
+    sys.stdout.flush()
+
+    if not sys.stdin.isatty():
+        return input()
+
+    fd = sys.stdin.fileno()
+    old_settings = termios.tcgetattr(fd)
+    buf = []
+
     try:
-        os.makedirs(os.path.dirname(HISTORY_FILE), exist_ok=True)
-        readline.read_history_file(HISTORY_FILE)
-    except (FileNotFoundError, PermissionError, OSError):
-        pass
-    readline.set_history_length(500)
+        tty.setcbreak(fd)
+
+        while True:
+            ch = os.read(fd, 1).decode("utf-8", errors="replace")
+
+            if ch == "\x03":
+                sys.stdout.write("\n")
+                sys.stdout.flush()
+                raise KeyboardInterrupt
+
+            if ch == "\x04":
+                sys.stdout.write("\n")
+                sys.stdout.flush()
+                raise EOFError
+
+            if ch == "\r" or ch == "\n":
+                sys.stdout.write("\n")
+                sys.stdout.flush()
+                return "".join(buf)
+
+            if ch == "\x7f" or ch == "\x08":
+                if buf:
+                    buf.pop()
+                    sys.stdout.write("\b \b")
+                    sys.stdout.flush()
+                continue
+
+            if ch == "/" and not buf:
+                termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+                sys.stdout.write("/")
+                sys.stdout.flush()
+                try:
+                    selected = pick_command()
+                except Exception:
+                    selected = None
+
+                if selected:
+                    if selected in ("ask",):
+                        sys.stdout.write(f"\r\033[2K{PROMPT}/{selected} ")
+                        sys.stdout.flush()
+                        termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+                        extra = input()
+                        return f"/{selected} {extra}"
+                    else:
+                        return f"/{selected}"
+                else:
+                    sys.stdout.write(f"\r\033[2K{PROMPT}")
+                    sys.stdout.flush()
+                    tty.setcbreak(fd)
+                    continue
+
+            if ch.isprintable():
+                buf.append(ch)
+                sys.stdout.write(ch)
+                sys.stdout.flush()
+
+    finally:
+        termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
 
 
 def main():
@@ -34,36 +99,15 @@ def main():
             print("  Setup cancelled.")
             sys.exit(1)
 
-    setup_readline()
-
     print(f"  \033[32m✓ Ready\033[0m — model: {config.get('ask_model', 'unknown')}")
     print()
 
     while True:
         try:
-            line = input("\033[32mqwiki> \033[0m").strip()
+            line = read_input().strip()
 
             if not line:
                 continue
-
-            if line == "/":
-                try:
-                    selected = pick_command()
-                except Exception as e:
-                    with open("/tmp/qwiki_picker_debug.log", "a") as dbg:
-                        import traceback
-                        dbg.write(f"EXCEPTION: {e}\n")
-                        dbg.write(traceback.format_exc())
-                    print(f"  Picker error: {e}")
-                    print("  Type a command (e.g., /help, /ask). Use /help to see all.")
-                    continue
-                if not selected:
-                    continue
-                if selected in ("ask",):
-                    extra = input(f"\033[32mqwiki> \033[0m/{selected} ").strip()
-                    line = f"/{selected} {extra}"
-                else:
-                    line = f"/{selected}"
 
             if not line.startswith("/"):
                 print("  Commands start with /. Type /help for available commands.")
@@ -72,12 +116,7 @@ def main():
             dispatch(line, config)
 
         except (EOFError, KeyboardInterrupt):
-            print("\n\n  Goodbye! 👋")
+            print("\n  Goodbye! 👋")
             break
         except Exception as e:
             print(f"\n  \033[31mError: {e}\033[0m\n")
-
-    try:
-        readline.write_history_file(HISTORY_FILE)
-    except Exception:
-        pass
