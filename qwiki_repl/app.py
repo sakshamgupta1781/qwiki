@@ -47,7 +47,11 @@ def main():
                 continue
 
             if line == "/":
-                selected = pick_command()
+                try:
+                    selected = pick_command()
+                except Exception:
+                    print("  Type a command (e.g., /help, /ask). Use /help to see all.")
+                    continue
                 if not selected:
                     continue
                 if selected in ("ask",):

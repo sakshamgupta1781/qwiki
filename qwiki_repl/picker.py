@@ -1,6 +1,12 @@
+import os
 import sys
-import tty
-import termios
+
+try:
+    import tty
+    import termios
+    HAS_TERMIOS = True
+except ImportError:
+    HAS_TERMIOS = False
 
 COMMAND_INFO = [
     ("ask", "Ask a question (runs evals by default)"),
@@ -19,11 +25,11 @@ def _read_key():
     old = termios.tcgetattr(fd)
     try:
         tty.setraw(fd)
-        ch = sys.stdin.read(1)
+        ch = os.read(fd, 1).decode("utf-8", errors="replace")
         if ch == "\x1b":
-            ch2 = sys.stdin.read(1)
+            ch2 = os.read(fd, 1).decode("utf-8", errors="replace")
             if ch2 == "[":
-                ch3 = sys.stdin.read(1)
+                ch3 = os.read(fd, 1).decode("utf-8", errors="replace")
                 if ch3 == "A":
                     return "UP"
                 elif ch3 == "B":
