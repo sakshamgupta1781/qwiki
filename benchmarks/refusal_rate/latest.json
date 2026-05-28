@@ -1,0 +1,26 @@
+{
+  "current": {
+    "timestamp": "2026-05-27T14:02:32",
+    "version": "v3",
+    "total": 50,
+    "answered": 35,
+    "refused": 15,
+    "incorrect_refusals": 0,
+    "total_should_answer": 35,
+    "incorrect_answers": 0,
+    "total_should_refuse": 15,
+    "refusal_rate": 30.0
+  },
+  "previous": {
+    "timestamp": "2026-05-27T16:00:42",
+    "version": "v3-fixed",
+    "total": 50,
+    "answered": 34,
+    "refused": 16,
+    "incorrect_refusals": 1,
+    "total_should_answer": 35,
+    "incorrect_answers": 0,
+    "total_should_refuse": 15,
+    "refusal_rate": 32.0
+  }
+}

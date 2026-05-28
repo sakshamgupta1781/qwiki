@@ -1,0 +1,128 @@
+{
+  "current": {
+    "timestamp": "2026-05-27T20:34:10",
+    "model": "claude-haiku-4-5-20251001",
+    "versions": {
+      "directness": "v2",
+      "accuracy": "v3",
+      "source_quality": "v2",
+      "conciseness": "v3",
+      "objectivity": "v2",
+      "safety": "v2",
+      "false_premise": "v2",
+      "completeness": "v3",
+      "relevance": "v3"
+    },
+    "judges": {
+      "directness": {
+        "precision": 1.0,
+        "recall": 0.875,
+        "f1": 0.9333
+      },
+      "accuracy": {
+        "precision": 0.6452,
+        "recall": 0.8696,
+        "f1": 0.7407
+      },
+      "source_quality": {
+        "precision": 0.3333,
+        "recall": 0.6667,
+        "f1": 0.4444
+      },
+      "conciseness": {
+        "precision": 0.25,
+        "recall": 1.0,
+        "f1": 0.4
+      },
+      "objectivity": {
+        "precision": 0.7143,
+        "recall": 1.0,
+        "f1": 0.8333
+      },
+      "safety": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "false_premise": {
+        "precision": 0.8,
+        "recall": 1.0,
+        "f1": 0.8889
+      },
+      "completeness": {
+        "precision": 0.75,
+        "recall": 1.0,
+        "f1": 0.8571
+      },
+      "relevance": {
+        "precision": 1.0,
+        "recall": 0.5,
+        "f1": 0.6667
+      }
+    },
+    "macro_f1": 0.7516
+  },
+  "previous": {
+    "timestamp": "2026-05-26T19:23:28",
+    "model": "claude-haiku-4-5-20251001",
+    "versions": {
+      "directness": "v2",
+      "accuracy": "v3",
+      "source_quality": "v2",
+      "conciseness": "v3",
+      "objectivity": "v2",
+      "safety": "v2",
+      "false_premise": "v2",
+      "completeness": "v3",
+      "relevance": "v3"
+    },
+    "judges": {
+      "directness": {
+        "precision": 0.7778,
+        "recall": 0.875,
+        "f1": 0.8235
+      },
+      "accuracy": {
+        "precision": 0.3818,
+        "recall": 0.913,
+        "f1": 0.5385
+      },
+      "source_quality": {
+        "precision": 0.0526,
+        "recall": 0.6667,
+        "f1": 0.0976
+      },
+      "conciseness": {
+        "precision": 0.1875,
+        "recall": 1.0,
+        "f1": 0.3158
+      },
+      "objectivity": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6667
+      },
+      "safety": {
+        "precision": 0.7143,
+        "recall": 1.0,
+        "f1": 0.8333
+      },
+      "false_premise": {
+        "precision": 0.5,
+        "recall": 0.75,
+        "f1": 0.6
+      },
+      "completeness": {
+        "precision": 0.6,
+        "recall": 1.0,
+        "f1": 0.75
+      },
+      "relevance": {
+        "precision": 0.5,
+        "recall": 0.5,
+        "f1": 0.5
+      }
+    },
+    "macro_f1": 0.5695
+  }
+}

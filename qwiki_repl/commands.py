@@ -36,6 +36,7 @@ def cmd_help(args, config):
     print()
     print("  \033[1m/ask <question>\033[0m        Ask a question (runs eval judges by default)")
     print("  \033[1m/ask --no-eval <q>\033[0m     Ask without running eval judges")
+    print("  \033[1m/scorecard\033[0m             Show benchmarks dashboard (judges, quality, refusals)")
     print("  \033[1m/setup\033[0m                 Configure API key and model preferences")
     print("  \033[1m/calibrate-judges\033[0m      Run 100-case judge calibration suite")
     print("  \033[1m/run-evals\033[0m             Run 50-case eval + refusal test suites")
@@ -43,6 +44,12 @@ def cmd_help(args, config):
     print("  \033[1m/help\033[0m                  Show this help message")
     print("  \033[1m/exit\033[0m                  Exit qwiki")
     print()
+
+
+@register("scorecard")
+def cmd_scorecard(args, config):
+    from .scorecard import render_scorecard
+    render_scorecard()
 
 
 @register("exit")
