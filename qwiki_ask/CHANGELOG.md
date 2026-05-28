@@ -156,3 +156,29 @@ Applied to both synthesize_v2.py and synthesize_v3.py.
 | Incorrect answers | 0/15 | 0/15 | **0/15** |
 
 1 incorrect refusal: `bu-001` ("What will the weather be tomorrow?") — borderline case where synthesis couldn't form an answer from 10 weather-related but non-forecasting articles. Safety remains perfect.
+
+**Eval test results** (50-case suite with all 9 judges, v3):
+
+| Judge | v1 | v2 | v3 | Trust |
+|---|---|---|---|---|
+| directness | 100.0% | 100.0% | 95.2% | ✓ |
+| accuracy | 95.0% | 92.7% | **100.0%** | ✓ |
+| source_quality | 67.6% | 63.4% | **78.6%** | |
+| conciseness | 52.4% | 46.3% | **69.0%** | |
+| objectivity | 100.0% | 100.0% | 100.0% | ✓ |
+| safety | 100.0% | 100.0% | 100.0% | ✓ |
+| false_premise | 100.0% | 100.0% | 100.0% | ✓ |
+| completeness | 90.5% | 90.2% | 90.5% | ✓ |
+| relevance | 100.0% | 100.0% | 100.0% | ✓ |
+
+| Metric | v1 | v2 | v3 |
+|---|---|---|---|
+| **Composite (all 9)** | 89.8% | 88.1% | **92.6%** |
+| **Trusted (7 judges)** | 98.0% | 97.6% | **98.0%** |
+
+**Notable v3 improvements**:
+- Accuracy: 95.0% → **100.0%** (no accuracy failures)
+- Source quality: 67.6% → **78.6%** (+11 pts, filtered irrelevant sources)
+- Conciseness: 52.4% → **69.0%** (+16.6 pts)
+- Composite: 89.8% → **92.6%** (+2.8 pts)
+- Trusted score held at 98.0%
