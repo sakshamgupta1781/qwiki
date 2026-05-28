@@ -11,10 +11,10 @@ HISTORY_FILE = os.path.expanduser("~/.qwiki/history")
 
 
 def setup_readline():
-    os.makedirs(os.path.dirname(HISTORY_FILE), exist_ok=True)
     try:
+        os.makedirs(os.path.dirname(HISTORY_FILE), exist_ok=True)
         readline.read_history_file(HISTORY_FILE)
-    except FileNotFoundError:
+    except (FileNotFoundError, PermissionError, OSError):
         pass
     readline.set_history_length(500)
 
