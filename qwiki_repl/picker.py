@@ -61,21 +61,40 @@ def _cleanup(num_lines):
     out.flush()
 
 
+def _log(msg):
+    with open("/tmp/qwiki_picker_debug.log", "a") as f:
+        f.write(msg + "\n")
+
+
 def pick_command():
+    _log("=== pick_command called ===")
+    _log(f"HAS_TERMIOS={HAS_TERMIOS}, stdin.isatty={sys.stdin.isatty()}, stdout.isatty={sys.stdout.isatty()}")
+
     if not HAS_TERMIOS or not sys.stdin.isatty():
+        _log("Falling back to numbered list")
         return _fallback_pick()
 
     fd = sys.stdin.fileno()
-    old_settings = termios.tcgetattr(fd)
+    _log(f"fd={fd}")
+
+    try:
+        old_settings = termios.tcgetattr(fd)
+        _log(f"Got terminal settings OK")
+    except Exception as e:
+        _log(f"tcgetattr failed: {e}")
+        return _fallback_pick()
 
     typed = ""
     selected_idx = 0
     matches = list(COMMAND_INFO)
 
+    _log(f"About to draw {len(matches)} matches")
     drawn_lines = _draw(typed, matches, selected_idx, 0)
+    _log(f"Drew {drawn_lines} lines")
 
     try:
         tty.setcbreak(fd)
+        _log("setcbreak OK")
 
         while True:
             key = _read_key(fd)

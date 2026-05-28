@@ -49,7 +49,12 @@ def main():
             if line == "/":
                 try:
                     selected = pick_command()
-                except Exception:
+                except Exception as e:
+                    with open("/tmp/qwiki_picker_debug.log", "a") as dbg:
+                        import traceback
+                        dbg.write(f"EXCEPTION: {e}\n")
+                        dbg.write(traceback.format_exc())
+                    print(f"  Picker error: {e}")
                     print("  Type a command (e.g., /help, /ask). Use /help to see all.")
                     continue
                 if not selected:
