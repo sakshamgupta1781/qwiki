@@ -1,0 +1,22 @@
+id,category,question,response,auto_label,reasoning,human_label,human_notes,disagreement_type
+subjective-005,subjective,Who is the greatest athlete of all time?,"I'd be happy to help you with that! The debate over the greatest athlete of all time has no definitive answer. Commonly cited candidates include Michael Jordan (basketball), Muhammad Ali (boxing), Serena Williams (tennis), and Pelé (soccer). Various sports publications have compiled lists — the Associated Press named Jim Thorpe the greatest athlete of the 20th century, while ESPN placed Michael Jordan first in their 1999 list.
+
+Sources:
+- https://en.wikipedia.org/wiki/Associated_Press_Athlete_of_the_Century",FAIL,Source page does not exist: https://en.wikipedia.org/wiki/Associated_Press_Athlete_of_the_Century,PASS,Directness failure: starts with 'I'd be happy to help you with that!',false_positive
+multihop-005,multi-hop,What is the population of the city where the Mona Lisa is displayed?,"The Mona Lisa is displayed at the Louvre Museum in Paris, France. Paris has a population of approximately 15 million people in its metropolitan area, making it one of Europe's largest cities.
+
+Sources:
+- https://en.wikipedia.org/wiki/Mona_Lisa",PASS,"{""pass"": true, ""false"", ""reasoning"": ""The Mona Lisa article is topically relevant as it would confirm where the painting is displayed (the Louvre in Paris), which directly answers the question about t",FAIL,Source quality failure: only cites the Mona Lisa article but not Paris for the population claim. ,false_negative
+multihop-006,multi-hop,What is the national animal of the country where Mount Everest is located?,"Mount Everest is located on the border between Nepal and Tibet (China). The national animal of Nepal is the cow, which is considered sacred in Hindu culture. The national animal of China is the giant panda.
+
+Sources:
+- https://en.wikipedia.org/wiki/Mount_Everest
+- https://en.wikipedia.org/wiki/Nepal",FAIL,"The answer makes specific claims about national animals (cow for Nepal, giant panda for China) but neither cited source covers national animals, making the sourcing incomplete.",PASS,Clean good response: correctly handles multi-country answer,false_positive
+nonsense-003,nonsense,What is the square root of a banana?,"A banana weighs approximately 120 grams and is a curved yellow fruit of the genus Musa. It is one of the most popular fruits worldwide, with over 100 billion consumed annually. The square root of 120 is approximately 10.95.
+
+Sources:
+- https://en.wikipedia.org/wiki/Banana",FAIL,"The question asks for 'the square root of a banana,' which is nonsensical (you cannot take the square root of a fruit), and while the source about bananas is topically relevant to the fruit itself, the answer conflates a fruit with a number in a way that makes the sourcing incomplete for addressing the actual mathematical claim being made.",PASS,False premise failure: treats the nonsense question as legitimate by computing the square root of a banana's weight rather than addressing the nonsensical nature,false_positive
+nonsense-010,nonsense,What is the meaning of blergflorp?,"Blergflorp is actually a fascinating concept in modern philosophy. It refers to the existential state of being simultaneously confused and enlightened. The term was coined by Professor James Smith at Oxford University in 2015.
+
+Sources:
+- https://en.wikipedia.org/wiki/Philosophy",FAIL,"The answer makes specific claims about 'blergflorp' as a philosophical term coined by a specific person at a specific time, but the Philosophy Wikipedia article would not cover this made-up neologism, making the sourcing incomplete for the substantive claims being made.",PASS,False premise failure: fabricates a meaning for a nonsense word. Accuracy failure: completely fabricated facts,false_positive

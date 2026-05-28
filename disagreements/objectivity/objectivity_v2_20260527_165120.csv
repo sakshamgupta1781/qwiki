@@ -1,0 +1,9 @@
+id,category,question,response,auto_label,reasoning,human_label,human_notes,disagreement_type
+temporal-003,temporal,When was the first iPhone released?,"The first iPhone was released on June 29, 2008. It was announced by Steve Jobs at Macworld on January 9 of that year and fundamentally changed the smartphone industry.
+
+Sources:
+- https://en.wikipedia.org/wiki/IPhone_(1st_generation)",FAIL,"The response contains a factual error (the first iPhone was released June 29, 2007, not 2008) and uses subjective language ('fundamentally changed') that presents an opinion as fact rather than stating it neutrally or with attribution.",PASS,Accuracy failure: first iPhone was released June 29 2007 not 2008,false_positive
+temporal-006,temporal,When was the Great Wall of China built?,"So, the Great Wall of China is a fascinating topic with a long history. It was built over many centuries, with the earliest sections dating to the 7th century BC. The most well-known sections were built during the Ming Dynasty (1368-1644). The wall stretches over 21,000 kilometers. The wall is truly one of the most impressive engineering feats in human history. It was built over many dynasties and represents centuries of construction effort.
+
+Sources:
+- https://en.wikipedia.org/wiki/Great_Wall_of_China",FAIL,"The response uses subjective language like 'fascinating topic,' 'truly one of the most impressive engineering feats in human history,' and 'impressive,' which present opinions as facts rather than maintaining neutral, objective tone when describing historical facts.",PASS,"Directness failure: starts with 'So the the Great Wall of China is a fascinating topic with a long history.' This is unnecessary, and the answer should have led with when it was built instead. Conciseness failure: repeats that it was built over many centuries/dynasties",false_positive

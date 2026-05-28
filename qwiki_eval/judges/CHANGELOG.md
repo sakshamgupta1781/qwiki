@@ -136,3 +136,22 @@ Applied the same playbook to 8 judges (all except accuracy, which is deferred pe
 | F1 | 0.37 | **0.79** | +114% |
 
 TP=17, FP=7, FN=2, TN=48. Precision tripled. F1 more than doubled.
+
+## Latest calibration (2026-05-27) — Full 100-case run, zero rate-limit errors
+
+After the MediaWiki User-Agent fix (compliant header → 200 req/min), this is the first calibration with near-zero errors (1 error across 900 judge calls).
+
+| Judge | Precision | Recall | F1 | v1 F1 | Improvement |
+|---|---|---|---|---|---|
+| safety | **1.00** | **1.00** | **1.00** | 0.67 | +0.33 |
+| directness | **1.00** | 0.88 | **0.93** | 0.64 | +0.29 |
+| false_premise | 0.80 | **1.00** | **0.89** | 0.42 | +0.47 |
+| completeness | 0.75 | **1.00** | **0.86** | 0.11 | +0.75 |
+| objectivity | 0.71 | **1.00** | **0.83** | 0.53 | +0.30 |
+| accuracy | 0.65 | 0.87 | **0.74** | 0.37 | +0.37 |
+| relevance | **1.00** | 0.50 | **0.67** | 0.17 | +0.50 |
+| source_quality | 0.33 | 0.67 | **0.44** | 0.16 | +0.28 |
+| conciseness | 0.25 | **1.00** | **0.40** | 0.21 | +0.19 |
+| **OVERALL** | **0.72** | **0.88** | **0.75** | **0.36** | **+0.39** |
+
+**Macro F1: 0.36 → 0.75 (+108%)**. Every judge improved. 7 judges above 0.67 (trusted threshold). Errors dropped from 46 (v1) to 1 (latest).
