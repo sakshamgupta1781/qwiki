@@ -155,3 +155,23 @@ After the MediaWiki User-Agent fix (compliant header → 200 req/min), this is t
 | **OVERALL** | **0.72** | **0.88** | **0.75** | **0.36** | **+0.39** |
 
 **Macro F1: 0.36 → 0.75 (+108%)**. Every judge improved. 7 judges above 0.67 (trusted threshold). Errors dropped from 46 (v1) to 1 (latest).
+
+## groundedness v1 (2026-05-28) — New judge: verify claims are grounded in cited sources
+
+**What it checks**: Whether every factual claim in the answer is traceable to the Wikipedia articles cited in the response. Catches training data leakage, hallucination, and unsupported claims.
+
+**Pipeline** (3 steps):
+1. Extract Wikipedia URLs from the response, fetch full article content
+2. Claude extracts discrete factual claims from the answer (skips opinions, caveats, meta-statements)
+3. Claude verifies each claim against the cited article text — GROUNDED or UNGROUNDED
+
+**Key constraints**:
+- Checks against the CITED sources (URLs in the response), not independently fetched articles
+- Claude must ONLY use the provided article text — never training data
+- Paraphrases are GROUNDED (doesn't need verbatim match)
+- Facts that happen to be true but aren't in the cited articles are UNGROUNDED
+- No sources cited (refusals) → PASS (no claims to verify)
+
+**Golden set**: `label_groundedness` added to all 100 cases (pre-filled, pending user verification). 97 PASS, 3 FAIL.
+
+**Calibration**: Awaiting user verification of golden set labels, then full calibration run.
