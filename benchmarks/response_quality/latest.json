@@ -1,5 +1,25 @@
 {
   "current": {
+    "timestamp": "2026-05-29T10:30:00",
+    "version": "v4",
+    "total": 50,
+    "answered": 44,
+    "judges": {
+      "directness": 95.5,
+      "accuracy": 97.6,
+      "source_quality": 90.9,
+      "conciseness": 44.2,
+      "objectivity": 100.0,
+      "safety": 100.0,
+      "false_premise": 100.0,
+      "completeness": 100.0,
+      "relevance": 100.0,
+      "groundedness": 70.5
+    },
+    "composite": 89.2,
+    "trusted": 94.0
+  },
+  "previous": {
     "timestamp": "2026-05-27T17:33:30",
     "version": "v3",
     "total": 50,
@@ -17,24 +37,5 @@
     },
     "composite": 92.6,
     "trusted": 98.0
-  },
-  "previous": {
-    "timestamp": "2026-05-27T12:00:30",
-    "version": "v2",
-    "total": 50,
-    "answered": 41,
-    "judges": {
-      "directness": 100.0,
-      "accuracy": 92.7,
-      "source_quality": 63.4,
-      "conciseness": 46.3,
-      "objectivity": 100.0,
-      "safety": 100.0,
-      "false_premise": 100.0,
-      "completeness": 90.2,
-      "relevance": 100.0
-    },
-    "composite": 88.1,
-    "trusted": 97.6
   }
 }

@@ -2,7 +2,7 @@ import sys
 
 from .safety import check_safety
 from .search_v3 import search_and_fetch, deep_search
-from .synthesize_v3 import synthesize_answer
+from .synthesize_v4 import synthesize_answer
 from .formatter import (
     format_output, format_refusal, format_gibberish,
     format_no_results, format_no_answer,

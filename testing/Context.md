@@ -39,9 +39,11 @@ Based on calibration F1 scores:
 
 ## Quality Metrics (latest)
 
-### Response Quality (v3)
-- Composite: **92.6%** | Trusted: **98.0%**
-- 5 judges at 100%: accuracy, objectivity, safety, false_premise, relevance
+### Response Quality (v4)
+- Composite: **89.2%** | Trusted: **94.0%**
+- 5 judges at 100%: objectivity, safety, false_premise, completeness, relevance
+- New: groundedness at 70.5% (first measurement with 10 judges)
+- Note: composite appears lower than v3 because v4 adds groundedness judge (which catches training data leakage) and uses v3 search/synthesis (v3 test results used v1 search/synthesis)
 
 ### Refusal Rate (v3-fixed)
 - Incorrect refusals: **1/35** (was 13/35 in v2)

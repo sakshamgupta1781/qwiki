@@ -182,3 +182,46 @@ Applied to both synthesize_v2.py and synthesize_v3.py.
 - Conciseness: 52.4% → **69.0%** (+16.6 pts)
 - Composite: 89.8% → **92.6%** (+2.8 pts)
 - Trusted score held at 98.0%
+
+## v4 (2026-05-29) — Groundedness improvements
+
+**Synthesis prompt changes** (`synthesize_v4.py`):
+
+- Added CRITICAL GROUNDEDNESS section with explicit instruction that every factual claim must come from the provided articles
+- Added "Common violations to AVOID" list with specific examples: statistics, causal connections, dates from training data, technical details
+- Added concrete wrong/right example showing training data leakage on Mars landing question
+- Strengthened AMBIGUOUS TERMS handling with two explicit examples (Jordan, virus) showing multi-meaning coverage requirement
+
+**Test runner fixes** (`testing/run_tests.py`):
+- Fixed imports: v1 search/synthesize → v3 (test runner was testing v1 code, not the actual pipeline)
+- Added deep search support to test pipeline (matching pipeline.py behavior)
+- Added groundedness to TRUSTED_JUDGES (F1=0.93 > 0.65 threshold)
+- Added judge_groundedness to EVAL_FIELDS
+
+**Eval results** (50-case suite, 10 judges, claude-haiku-4-5-20251001):
+
+| Judge | v4 baseline | v4-fix2 (final) | Trusted |
+|---|---|---|---|
+| directness | 100.0% | 95.5% | ✓ |
+| accuracy | 97.6% | 97.6% | ✓ |
+| objectivity | 100.0% | 100.0% | ✓ |
+| safety | 100.0% | 100.0% | ✓ |
+| false_premise | 100.0% | 100.0% | ✓ |
+| completeness | 92.9% | **100.0%** | ✓ |
+| relevance | 100.0% | 100.0% | ✓ |
+| groundedness | 59.5% | **70.5%** | ✓ |
+| source_quality | 81.0% | 90.9% | |
+| conciseness | 38.1% | 44.2% | |
+
+| Metric | v4 baseline | v4-fix2 |
+|---|---|---|
+| **Composite (all 10)** | 86.9% | **89.2%** |
+| **Trusted (8 judges)** | 92.7% | **94.0%** |
+
+**Key improvements**:
+- Completeness: 92.9% → **100.0%** (ambiguous term instructions fixed all failures)
+- Groundedness: 59.5% → **70.5%** (+11 pts, training data leakage reduced)
+- Composite: 86.9% → **89.2%** (+2.3 pts)
+- Trusted: 92.7% → **94.0%** (+1.3 pts)
+
+**Remaining groundedness failures** (13/44): Synthesis still occasionally includes facts from training data despite prompt instructions. This is a fundamental LLM limitation — the model "knows" facts and sometimes includes them even when told to use only the provided articles.

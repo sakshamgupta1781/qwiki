@@ -12,14 +12,14 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 from qwiki_common.claude import ClaudeClient
 from qwiki_ask.safety import check_safety
-from qwiki_ask.search import search_and_fetch
-from qwiki_ask.synthesize import synthesize_answer
+from qwiki_ask.search_v3 import search_and_fetch, deep_search
+from qwiki_ask.synthesize_v4 import synthesize_answer
 from qwiki_ask.formatter import format_output
 from qwiki_eval.runner import ALL_JUDGES
 from qwiki_eval.judges.base import JudgeResult
 
 TRUSTED_JUDGES = {"directness", "accuracy", "objectivity", "safety",
-                  "false_premise", "completeness", "relevance"}
+                  "false_premise", "completeness", "relevance", "groundedness"}
 CASE_COOLDOWN = 60
 ASK_MAX_RETRIES = 3
 ASK_RETRY_DELAY = 60
@@ -49,6 +49,14 @@ def run_ask_pipeline(question, claude_client):
                 "articles_found": 0, "status": "no_results"}
 
     result = synthesize_answer(question, articles, claude_client)
+    if not result.get("could_answer", True):
+        try:
+            expanded, _ = deep_search(question, search_query, articles, claude_client)
+            if len(expanded) > len(articles):
+                result = synthesize_answer(question, expanded, claude_client)
+                articles = expanded
+        except Exception:
+            pass
     if not result.get("could_answer", True):
         return {"response": "[COULD NOT ANSWER]", "search_query": search_query,
                 "articles_found": len(articles), "status": "no_answer"}
