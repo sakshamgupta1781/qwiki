@@ -30,6 +30,7 @@ EVAL_FIELDS = ["id", "category", "question",
                "judge_directness", "judge_accuracy", "judge_source_quality",
                "judge_conciseness", "judge_objectivity", "judge_safety",
                "judge_false_premise", "judge_completeness", "judge_relevance",
+               "judge_groundedness",
                "composite_score", "trusted_score"]
 
 

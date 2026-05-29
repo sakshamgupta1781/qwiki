@@ -35,7 +35,7 @@ Based on calibration F1 scores:
 
 **Trusted** (7 judges): safety (1.00), directness (0.93), false_premise (0.89), completeness (0.86), objectivity (0.83), accuracy (0.74), relevance (0.67)
 
-**Untrusted** (2 judges): source_quality (0.44), conciseness (0.40)
+**Untrusted** (3 judges): groundedness (0.93, pending full official calibration), source_quality (0.44), conciseness (0.40)
 
 ## Quality Metrics (latest)
 

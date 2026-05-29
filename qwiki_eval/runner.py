@@ -7,7 +7,7 @@ from .judges.safety_v2 import SafetyJudge
 from .judges.false_premise_v2 import FalsePremiseJudge
 from .judges.completeness_v3 import CompletenessJudge
 from .judges.relevance_v3 import RelevanceJudge
-from .judges.groundedness_v1 import GroundednessJudge
+from .judges.groundedness_v2 import GroundednessJudge
 from .judges.base import JudgeResult
 
 ALL_JUDGES = [

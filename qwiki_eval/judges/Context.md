@@ -2,7 +2,7 @@
 
 ## Overview
 
-qwiki-eval uses 9 independent LLM judges to evaluate Wikipedia Q&A responses. Each judge produces a binary PASS/FAIL verdict with reasoning. The composite score is the percentage of judges that pass.
+qwiki-eval uses 10 independent LLM judges to evaluate Wikipedia Q&A responses. Each judge produces a binary PASS/FAIL verdict with reasoning. The composite score is the percentage of judges that pass.
 
 All judges inherit from `BaseJudge` (defined in `base.py`), which provides:
 - `evaluate(question, response, claude_client)` — abstract method each judge implements
@@ -102,6 +102,19 @@ Every judge handles **refusal responses** (where the tool refuses a dangerous qu
 - **Refusals**: PASS
 - **Note**: Brief context-setting that directly supports the answer is acceptable
 
+### 10. Groundedness (`groundedness.py`)
+
+- **Type**: Multi-stage (2 Claude calls + MediaWiki API calls)
+- **What it evaluates**: Whether every factual claim in the response is traceable to the Wikipedia articles cited in the response
+- **Pipeline**:
+  1. **URL extraction**: Parse Wikipedia URLs from the response, fetch full article content via MediaWiki API
+  2. **Claim extraction**: Claude extracts discrete factual claims from the response (skips opinions, caveats, meta-statements)
+  3. **Groundedness verification**: Claude verifies each claim against the cited article text — GROUNDED or UNGROUNDED
+- **PASS**: All factual claims are grounded in (supported by) the cited Wikipedia articles
+- **FAIL**: Any claim is not found in the cited articles (training data leakage, hallucination, unsupported claim)
+- **Refusals**: PASS (no sources cited → no claims to verify)
+- **Note**: Checks against CITED sources in the response, not independently fetched articles. Paraphrases are grounded. Facts that are true but not in the cited articles are ungrounded.
+
 ## Calibration Results
 
 ### v0 Baseline (before tuning)
@@ -121,8 +134,9 @@ Macro F1: **0.36**. Recall strong (0.88), precision low (0.23). Root cause: scop
 | relevance | 1.00 | 0.50 | **0.67** | 0.17 | +0.50 |
 | source_quality | 0.33 | 0.67 | **0.44** | 0.16 | +0.28 |
 | conciseness | 0.25 | 1.00 | **0.40** | 0.21 | +0.19 |
+| groundedness | 0.92 | 0.94 | **0.93** | — | new |
 
-**Macro F1: 0.36 → 0.75 (+108%)**. Every judge improved. Rate-limit errors: 46 → 1 (MediaWiki User-Agent fix).
+**Macro F1: 0.36 → 0.77 (+114%)**. Every judge improved. 8 judges above 0.67 (trusted threshold). Rate-limit errors: 46 → 1 (MediaWiki User-Agent fix).
 
 ## Key Learnings from Judge Tuning
 
