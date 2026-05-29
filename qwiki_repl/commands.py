@@ -106,7 +106,7 @@ def cmd_calibrate_judges(args, config):
     from qwiki_eval.cli import cmd_calibrate
     import argparse
 
-    golden_path = "golden/eval_set.csv"
+    golden_path = "qwiki_eval/golden/eval_set.csv"
     if not os.path.exists(golden_path):
         print(f"  \033[31mGolden eval set not found: {golden_path}\033[0m")
         return

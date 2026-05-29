@@ -8,8 +8,10 @@ from .api.claude import ClaudeClient
 from .runner import run_eval, ALL_JUDGES
 from .formatter import format_table, format_json
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-from calibration.metrics import compute_metrics
+from .calibration.metrics import compute_metrics
+
+_EVAL_DIR = os.path.dirname(os.path.abspath(__file__))
+_HISTORY_PATH = os.path.join(_EVAL_DIR, "calibration", "history.csv")
 
 
 def get_api_key():
@@ -124,8 +126,8 @@ def cmd_calibrate(args):
     disagreements_paths = {}
     for name in judge_names:
         v = judge_versions[name]
-        results_paths[name] = f"results/{name}/{name}_{v}_{timestamp_file}.csv"
-        disagreements_paths[name] = f"disagreements/{name}/{name}_{v}_{timestamp_file}.csv"
+        results_paths[name] = f"testing/results/{name}/{name}_{v}_{timestamp_file}.csv"
+        disagreements_paths[name] = f"testing/disagreements/{name}/{name}_{v}_{timestamp_file}.csv"
 
     for name in judge_names:
         os.makedirs(os.path.dirname(results_paths[name]), exist_ok=True)
@@ -246,17 +248,17 @@ def cmd_calibrate(args):
         )
 
     if history_rows:
-        os.makedirs("calibration", exist_ok=True)
-        write_header = not os.path.exists("calibration/history.csv")
-        with open("calibration/history.csv", "a", newline="", encoding="utf-8") as f:
+        os.makedirs(os.path.dirname(_HISTORY_PATH), exist_ok=True)
+        write_header = not os.path.exists(_HISTORY_PATH)
+        with open(_HISTORY_PATH, "a", newline="", encoding="utf-8") as f:
             writer = csv.DictWriter(f, fieldnames=HISTORY_FIELDS)
             if write_header:
                 writer.writeheader()
             writer.writerows(history_rows)
 
-    print(f"\nResults: results/<judge>/", file=sys.stderr)
-    print(f"Disagreements: disagreements/<judge>/", file=sys.stderr)
-    print(f"History: calibration/history.csv", file=sys.stderr)
+    print(f"\nResults: testing/results/<judge>/", file=sys.stderr)
+    print(f"Disagreements: testing/disagreements/<judge>/", file=sys.stderr)
+    print(f"History: {_HISTORY_PATH}", file=sys.stderr)
 
 
 def main():
