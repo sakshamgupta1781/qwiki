@@ -1,0 +1,5 @@
+id,category,question,response,auto_label,reasoning,human_label,human_notes,disagreement_type
+temporal-005,temporal,When was the Declaration of Independence signed?,"The United States Declaration of Independence was adopted by the Continental Congress on July 4, 1776. Most delegates signed it on August 2, 1776. The document declared the thirteen American colonies free from British rule.
+
+Sources:
+- https://en.wikipedia.org/wiki/United_States_Declaration_of_Independence",PASS,"The response leads directly with substantive factual content about when the Declaration of Independence was signed, without any preamble, greetings, or hedging language.",FAIL,"Directness failure: the response leads with when the Declaration of Independence was adopted, not when it was signed. The ideal response should lead with when it was signed, then add that it was adopted by Congress on July 4th. ",false_negative

@@ -1,0 +1,30 @@
+id,category,question,response,auto_label,reasoning,human_label,human_notes,disagreement_type
+factual-001,factual,Who discovered penicillin?,"Alexander Fleming discovered penicillin in 1928 when he noticed that mold had killed bacteria in a petri dish he had left out. The mold was later identified as Penicillium notatum, and Fleming's discovery led to the development of the first widely used antibiotic.
+
+Sources:
+- https://en.wikipedia.org/wiki/Penicillin
+- https://en.wikipedia.org/wiki/Alexander_Fleming",FAIL,Round 1: 1 claim(s) contradicted by Wikipedia.,PASS,Clean good response,false_positive
+factual-008,factual,What is the largest organ in the human body?,"The skin is the largest organ of the human body. In adults, it covers an area of about 1.5 to 2.0 square meters and accounts for roughly 15% of total body weight. The skin serves as a protective barrier against pathogens and environmental damage.
+
+Sources:
+- https://en.wikipedia.org/wiki/Human_skin",FAIL,Round 2: 1 claim(s) contradicted after targeted Wikipedia search.,PASS,Clean good response,false_positive
+temporal-004,temporal,When did humans first land on the Moon?,"Humans first landed on the Moon on July 20, 1969, during NASA's Apollo 11 mission. Astronauts Neil Armstrong and Buzz Aldrin walked on the lunar surface while Michael Collins orbited above in the command module.
+
+Sources:
+- https://en.wikipedia.org/wiki/Apollo_11",FAIL,Round 1: 1 claim(s) contradicted by Wikipedia.,PASS,Clean good response,false_positive
+temporal-006,temporal,When was the Great Wall of China built?,"So, the Great Wall of China is a fascinating topic with a long history. It was built over many centuries, with the earliest sections dating to the 7th century BC. The most well-known sections were built during the Ming Dynasty (1368-1644). The wall stretches over 21,000 kilometers. The wall is truly one of the most impressive engineering feats in human history. It was built over many dynasties and represents centuries of construction effort.
+
+Sources:
+- https://en.wikipedia.org/wiki/Great_Wall_of_China",PASS,All claims supported by Wikipedia articles.,FAIL,"Directness failure: starts with 'So the the Great Wall of China is a fascinating topic with a long history.' This is unnecessary, and the answer should have led with when it was built instead. Conciseness failure: repeats that it was built over many centuries/dynasties",false_negative
+temporal-007,temporal,When was the Titanic sunk?,"The RMS Titanic sank on April 15, 1912, after striking an iceberg during its maiden voyage from Southampton to New York City. Of the estimated 2,224 passengers and crew, more than 1,500 died, making it one of the deadliest peacetime maritime disasters in history.
+
+Sources:
+- https://en.wikipedia.org/wiki/Titanic",PASS,All claims supported by Wikipedia articles.,FAIL,Clean good response,false_negative
+subjective-005,subjective,Who is the greatest athlete of all time?,"I'd be happy to help you with that! The debate over the greatest athlete of all time has no definitive answer. Commonly cited candidates include Michael Jordan (basketball), Muhammad Ali (boxing), Serena Williams (tennis), and Pelé (soccer). Various sports publications have compiled lists — the Associated Press named Jim Thorpe the greatest athlete of the 20th century, while ESPN placed Michael Jordan first in their 1999 list.
+
+Sources:
+- https://en.wikipedia.org/wiki/Associated_Press_Athlete_of_the_Century",FAIL,Round 2: 1 claim(s) contradicted after targeted Wikipedia search.,PASS,Directness failure: starts with 'I'd be happy to help you with that!',false_positive
+subjective-010,subjective,Is democracy the best form of government?,"That's a really thought-provoking question! Democracy is arguably the greatest political system ever devised. Winston Churchill famously said that democracy is the worst form of government except for all the others. Most political scientists agree that democracy provides the best outcomes.
+
+Sources:
+- https://en.wikipedia.org/wiki/Democracy",PASS,All claims verified. 3 claim(s) remain unverifiable after 2 rounds of Wikipedia search.,FAIL,Directness failure: preamble. Objectivity failure: 'greatest political system ever devised' and 'most political scientists agree' without citation,false_negative

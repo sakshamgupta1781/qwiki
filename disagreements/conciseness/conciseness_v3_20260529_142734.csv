@@ -1,0 +1,22 @@
+id,category,question,response,auto_label,reasoning,human_label,human_notes,disagreement_type
+factual-003,factual,What is the chemical formula for water?,"Great question! Water is such a fascinating molecule. The chemical formula for water is H2O, meaning each molecule consists of two hydrogen atoms bonded to one oxygen atom. Water is essential for all known forms of life and covers about 71% of Earth's surface.
+
+Sources:
+- https://en.wikipedia.org/wiki/Water",FAIL,"The response contains unnecessary filler ('Great question!' and 'Water is such a fascinating molecule') and adds irrelevant information (life importance, Earth coverage) that doesn't address the straightforward question about the chemical formula, making it verbose for a simple factual query.",PASS,Directness failure: starts with 'Great question!',false_positive
+factual-005,factual,How far is the Moon from Earth?,"The average distance from Earth to the Moon is approximately 284,400 kilometers (176,600 miles). This distance varies because the Moon's orbit is elliptical, ranging from about 356,500 km at perigee to 406,700 km at apogee.
+
+Sources:
+- https://en.wikipedia.org/wiki/Moon
+- https://en.wikipedia.org/wiki/Lunar_distance",FAIL,"The response contains a factual error (284,400 km is incorrect; the average is ~384,400 km), but more importantly for conciseness evaluation, it repeats the same information twice: first stating 'approximately 284,400 kilometers' and then immediately explaining that 'this distance varies' with specific perigee/apogee values, which contradicts the initial claim of a single average distance, creating unnecessary confusion rather than efficient communication.",PASS,Accuracy failure: average distance is ~384400 km not 284400 km,false_positive
+superlative-006,superlative,What is the most spoken language in the world?,"English is clearly the best and most important language in the world, spoken by billions of people. Mandarin Chinese has the most native speakers at over 900 million, but English is the most widely spoken language overall when including non-native speakers.
+
+Sources:
+- https://en.wikipedia.org/wiki/List_of_languages_by_number_of_native_speakers",FAIL,"The response contains repetition and contradictory claims: it first asserts English is 'the most spoken language' then immediately contradicts itself by saying Mandarin has the most native speakers, creating confusion rather than clarity in a simple factual question that warrants a concise answer.",PASS,Objectivity failure: 'best and most important language' is subjective judgment,false_positive
+temporal-003,temporal,When was the first iPhone released?,"The first iPhone was released on June 29, 2008. It was announced by Steve Jobs at Macworld on January 9 of that year and fundamentally changed the smartphone industry.
+
+Sources:
+- https://en.wikipedia.org/wiki/IPhone_(1st_generation)",FAIL,"The response contains a factual error (first iPhone was released June 29, 2007, not 2008), but more importantly for conciseness evaluation, it provides contextual information about the announcement and impact that, while potentially enriching, goes beyond what a straightforward factual question requires—though this is borderline acceptable at 2 sentences. The accuracy issue is the primary concern here.",PASS,Accuracy failure: first iPhone was released June 29 2007 not 2008,false_positive
+subjective-010,subjective,Is democracy the best form of government?,"That's a really thought-provoking question! Democracy is arguably the greatest political system ever devised. Winston Churchill famously said that democracy is the worst form of government except for all the others. Most political scientists agree that democracy provides the best outcomes.
+
+Sources:
+- https://en.wikipedia.org/wiki/Democracy",FAIL,"The response repeats the same claim (democracy is the best/greatest form of government) three times in different phrasings without adding substantive new information, and includes filler preamble ('That's a really thought-provoking question!') that doesn't contribute to answering the question.",PASS,Directness failure: preamble. Objectivity failure: 'greatest political system ever devised' and 'most political scientists agree' without citation,false_positive

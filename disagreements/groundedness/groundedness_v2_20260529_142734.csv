@@ -1,0 +1,13 @@
+id,category,question,response,auto_label,reasoning,human_label,human_notes,disagreement_type
+factual-004,factual,What is the capital of Australia?,"Canberra is the capital of Australia. It was selected as the capital in 1908 as a compromise between the rival cities of Sydney and Melbourne. The city was designed by American architects Walter Burley Griffin and Marion Mahony Griffin.
+
+Sources:
+- https://en.wikipedia.org/wiki/Canberra",FAIL,"All four claims are grounded in the Wikipedia article. Claim 1 is directly stated in the opening sentence. Claim 2 is supported by the text stating the site was selected in 1908. Claim 3 is explicitly stated as a compromise between Sydney and Melbourne. Claim 4 is confirmed multiple times, including in the opening section and the history section describing the design competition won by Walter Burley Griffin and Marion Mahony Griffin.",PASS,Clean good response,false_positive
+superlative-001,superlative,What is the tallest building in the world?,"The Burj Khalifa in Dubai, United Arab Emirates, is the tallest building in the world, standing at 828 meters (2,717 feet). It was completed in 2010 and has 163 floors.
+
+Sources:
+- https://en.wikipedia.org/wiki/Burj_Khalifa",FAIL,"All five claims are grounded in the Wikipedia article. Claim 1 is directly stated in the opening sentence. Claim 2 is supported by the statement that it is 'the world's tallest structure' and 'the tallest building in the world since its topping out in 2009.' Claim 3 is explicitly stated as the roof height of 828 m (2,717 ft). Claim 4 is confirmed by multiple references to the building opening on 4 January 2010. Claim 5 is found in the Records section which states 'Building with most floors: 163.' All claims appear in the provided article text.",PASS,Clean good response,false_positive
+temporal-005,temporal,When was the Declaration of Independence signed?,"The United States Declaration of Independence was adopted by the Continental Congress on July 4, 1776. Most delegates signed it on August 2, 1776. The document declared the thirteen American colonies free from British rule.
+
+Sources:
+- https://en.wikipedia.org/wiki/United_States_Declaration_of_Independence",FAIL,ERROR: The read operation timed out,PASS,"Directness failure: the response leads with when the Declaration of Independence was adopted, not when it was signed. The ideal response should lead with when it was signed, then add that it was adopted by Congress on July 4th. ",false_positive
