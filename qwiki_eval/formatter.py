@@ -1,66 +1,29 @@
 import json
 import shutil
+import textwrap
 
 
 def format_table(results, composite):
     term_width = shutil.get_terminal_size((80, 24)).columns
-    max_reason_width = min(max(term_width - 38, 20), 80)
-
-    judge_col = 19
-    result_col = 6
-
-    def truncate(text, width):
-        if len(text) <= width:
-            return text
-        return text[: width - 3] + "..."
-
-    header = (
-        f"┌─{'Judge':─<{judge_col}}─┬─"
-        f"{'Result':─<{result_col}}─┬─"
-        f"{'':─<{max_reason_width}}─┐"
-    )
-    sep = (
-        f"├─{'':─<{judge_col}}─┼─"
-        f"{'':─<{result_col}}─┼─"
-        f"{'':─<{max_reason_width}}─┤"
-    )
-    footer_sep = (
-        f"├─{'':─<{judge_col}}─┼─"
-        f"{'':─<{result_col}}─┼─"
-        f"{'':─<{max_reason_width}}─┤"
-    )
-    bottom = (
-        f"└─{'':─<{judge_col}}─┴─"
-        f"{'':─<{result_col}}─┴─"
-        f"{'':─<{max_reason_width}}─┘"
-    )
-
-    lines = [header]
-    lines.append(
-        f"│ {'Judge':<{judge_col}} │ {'Result':<{result_col}} "
-        f"│ {'Reasoning':<{max_reason_width}} │"
-    )
-    lines.append(sep)
-
-    for r in results:
-        result_str = "PASS" if r.passed else "FAIL"
-        reasoning = truncate(r.reasoning, max_reason_width)
-        lines.append(
-            f"│ {r.judge_name:<{judge_col}} │ {result_str:<{result_col}} "
-            f"│ {reasoning:<{max_reason_width}} │"
-        )
+    wrap_width = max(term_width - 4, 40)
 
     passed = sum(1 for r in results if r.passed)
     total = len(results)
     score_str = f"{composite:.1f}%"
-    summary = f"{passed}/{total} judges passed"
 
-    lines.append(footer_sep)
-    lines.append(
-        f"│ {'COMPOSITE SCORE':<{judge_col}} │ {score_str:<{result_col}} "
-        f"│ {summary:<{max_reason_width}} │"
-    )
-    lines.append(bottom)
+    lines = []
+    thin = "─" * wrap_width
+
+    for r in results:
+        result_str = "\033[32mPASS\033[0m" if r.passed else "\033[31mFAIL\033[0m"
+        lines.append(f"  {r.judge_name:<19} {result_str}")
+        wrapped = textwrap.fill(r.reasoning, width=wrap_width,
+                                initial_indent="    ", subsequent_indent="    ")
+        lines.append(f"\033[90m{wrapped}\033[0m")
+        lines.append("")
+
+    lines.append(f"  {thin}")
+    lines.append(f"  \033[1mCOMPOSITE SCORE: {score_str}\033[0m — {passed}/{total} judges passed")
 
     return "\n".join(lines)
 
