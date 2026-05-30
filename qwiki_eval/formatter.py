@@ -4,7 +4,7 @@ import shutil
 
 def format_table(results, composite):
     term_width = shutil.get_terminal_size((80, 24)).columns
-    max_reason_width = max(term_width - 38, 20)
+    max_reason_width = min(max(term_width - 38, 20), 80)
 
     judge_col = 19
     result_col = 6

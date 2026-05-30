@@ -96,6 +96,10 @@ def pick_command():
                     selected = matches[selected_idx][0]
                     _cleanup(drawn_lines)
                     return selected
+                for name, _ in COMMAND_INFO:
+                    if typed == name or typed.startswith(name + " "):
+                        _cleanup(drawn_lines)
+                        return typed
                 continue
 
             if key == "UP":

@@ -7,7 +7,7 @@ from .banner import print_banner
 from .commands import dispatch
 from .config import load_config, setup_interactive
 from .deps import check_dependencies
-from .picker import pick_command
+from .picker import pick_command, COMMAND_INFO
 
 HISTORY_FILE = os.path.expanduser("~/.qwiki/history")
 PROMPT = "\033[32mqwiki> \033[0m"
@@ -62,7 +62,9 @@ def read_input():
                     selected = None
 
                 if selected:
-                    if selected in ("ask",):
+                    if " " in selected:
+                        return f"/{selected}"
+                    elif selected in ("ask",):
                         sys.stdout.write(f"\r\033[2K{PROMPT}/{selected} ")
                         sys.stdout.flush()
                         termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
@@ -100,6 +102,12 @@ def main():
             sys.exit(1)
 
     print(f"  \033[32m✓ Ready\033[0m — model: {config.get('ask_model', 'unknown')}")
+    print()
+    print("  \033[1mQuick Start\033[0m — type / to browse commands")
+    for name, desc in COMMAND_INFO:
+        print(f"    \033[90m/{name:<22} {desc}\033[0m")
+    print()
+    print("  \033[90mExample: /ask What is the capital of Japan?\033[0m")
     print()
 
     while True:

@@ -7,7 +7,6 @@ def format_output(articles, result):
     bar = "═" * LINE_WIDTH
     thin = "─" * LINE_WIDTH
 
-    title = articles[0]["title"] if articles else "Answer"
     answer = result.get("answer", "")
     wrapped_answer = textwrap.fill(answer, width=LINE_WIDTH)
 
@@ -17,8 +16,8 @@ def format_output(articles, result):
     if source_items:
         source_titles = set()
         for s in source_items:
-            title = s.split(" — ")[0].split(" - ")[0].strip()
-            source_titles.add(title.lower())
+            t = s.split(" — ")[0].split(" - ")[0].strip()
+            source_titles.add(t.lower())
 
         relevant = [a for a in articles
                     if a["title"].lower() in source_titles
@@ -28,10 +27,6 @@ def format_output(articles, result):
         url_lines = "\n".join(f"• {a['url']}" for a in articles[:5])
 
     output = f"""
-{bar}
-  {title}
-{bar}
-
 \U0001f4cc Answer
 {thin}
 {wrapped_answer}

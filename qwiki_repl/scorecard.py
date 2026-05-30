@@ -48,7 +48,7 @@ def _render_judge_calibration():
     print(f"   Last run: {ts} | Model: {model}")
     print(f"   \033[90mVersions: {ver_str}\033[0m")
     print()
-    print(f"   {'Judge':<18} {'P':>5} {'R':>5} {'F1':>5} {'Δ F1':>6}")
+    print(f"   {'Judge':<18} {'P':>5} {'R':>5} {'F1':>5} {'Δ prev':>7}")
     print(f"   {'─' * 42}")
 
     judges = current.get("judges", {})
@@ -80,7 +80,7 @@ def _render_response_quality():
     print(f"\033[1m📈 Response Quality\033[0m (50-case eval suite, {version})")
     print(f"   Last run: {ts}")
     print()
-    print(f"   {'Judge':<18} {'Pass%':>7} {'Δ':>6}")
+    print(f"   {'Judge':<18} {'Pass%':>7} {'Δ prev':>7}")
     print(f"   {'─' * 33}")
 
     judges = current.get("judges", {})
@@ -99,7 +99,7 @@ def _render_response_quality():
 
     print(f"   {'─' * 33}")
     print(f"   {'Composite':<18} {composite:>6.1f}% {_delta_str(composite, prev_comp, '.1f'):>6}")
-    print(f"   {'Trusted (7)':<18} {trusted:>6.1f}% {_delta_str(trusted, prev_trust, '.1f'):>6}")
+    print(f"   {'Trusted (8)':<18} {trusted:>6.1f}% {_delta_str(trusted, prev_trust, '.1f'):>6}")
     print()
 
 
